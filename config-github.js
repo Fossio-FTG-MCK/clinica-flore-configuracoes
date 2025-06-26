@@ -6,7 +6,7 @@ window.CONFIG = {
     APP_NAME: 'Clínica Florê - Configurações',
     VERSION: '1.0.0',
     
-    // 🔒 Configuração Supabase (DEMO - substitua pelas suas credenciais)
+    // 🔒 Configuração Supabase (Credenciais funcionais)
     SUPABASE: {
         URL: 'https://vrvxzcnlpugupwjzbjcq.supabase.co',
         ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZydnh6Y25scHVndXB3anpiamNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5NjkxOTEsImV4cCI6MjA2NjU0NTE5MX0.0KxrWMKD7fupTzZ2muNRKgdrswcNJxJz7CHLMBMPPh4',
@@ -28,12 +28,18 @@ window.CONFIG = {
     }
 };
 
-// 📝 Instruções para configuração
-console.log(`
-🔧 CONFIGURAÇÃO NECESSÁRIA:
-1. Substitua 'SEU_SUPABASE_URL_AQUI' pela sua URL do Supabase
-2. Substitua 'SUA_ANON_KEY_AQUI' pela sua chave anônima
-3. Para ambiente local, use o arquivo config.js (não versionado)
+// 🌟 Configuração específica para GitHub Pages
+console.log('🔧 Configuração do GitHub Pages carregada');
+console.log('✅ Clínica Florê - Sistema configurado');
 
-📖 Veja o arquivo README.md para instruções completas
+// 📝 Instruções para uso
+console.log(`
+📋 PÁGINA CONFIGURADA PARA:
+- Cliente: Clínica Florê
+- Contato: Mônica
+- Gestor: Marcelo Fruck
+- Plataforma: GitHub Pages
+
+🔗 Conexão com Supabase: ${window.CONFIG.SUPABASE.URL}
+📊 Tabela: ${window.CONFIG.SUPABASE.TABLE_NAME}
 `); 
