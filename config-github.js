@@ -8,9 +8,9 @@ window.CONFIG = {
     
     // 🔒 Configuração Supabase (DEMO - substitua pelas suas credenciais)
     SUPABASE: {
-        URL: 'SEU_SUPABASE_URL_AQUI',
-        ANON_KEY: 'SUA_ANON_KEY_AQUI',
-        TABLE_NAME: 'clinicas_configuracoes'
+        URL: 'https://vrvxzcnlpugupwjzbjcq.supabase.co',
+        ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZydnh6Y25scHVndXB3anpiamNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5NjkxOTEsImV4cCI6MjA2NjU0NTE5MX0.0KxrWMKD7fupTzZ2muNRKgdrswcNJxJz7CHLMBMPPh4',
+        TABLE_NAME: 'planos_acao'
     },
     
     // 📊 Configurações da aplicação
