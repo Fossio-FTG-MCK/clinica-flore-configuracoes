@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Debug - Clínica Florê</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8">🔍 Debug - Sistema Clínica Florê</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Status dos Scripts -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">📦 Status dos Scripts</h2>
+                <div id="script-status" class="space-y-2"></div>
+            </div>
+
+            <!-- Configuração -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">⚙️ Configuração</h2>
+                <div id="config-status" class="space-y-2"></div>
+            </div>
+
+            <!-- Teste de Conexão -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">🔌 Teste de Conexão</h2>
+                <button onclick="testConnection()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2">
+                    Testar Conexão Supabase
+                </button>
+                <button onclick="testSave()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 mb-4">
+                    Testar Salvamento
+                </button>
+                <div id="connection-result"></div>
+            </div>
+
+            <!-- App Status -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">🚀 Status da App</h2>
+                <button onclick="loadApp()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-4">
+                    Carregar App Principal
+                </button>
+                <div id="app-status"></div>
+            </div>
+        </div>
+
+        <!-- Log Console -->
+        <div class="bg-gray-800 text-green-400 p-4 rounded-lg mt-8">
+            <h3 class="text-lg font-semibold mb-2">📝 Console Log</h3>
+            <div id="console-log" class="font-mono text-sm h-40 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('console-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'text-red-400' : type === 'success' ? 'text-green-400' : 'text-blue-400';
+            logDiv.innerHTML += `<div class="${color}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function checkStatus(name, condition, element) {
+            const status = condition ? '✅' : '❌';
+            const color = condition ? 'text-green-600' : 'text-red-600';
+            element.innerHTML += `<div class="${color}">${status} ${name}</div>`;
+            return condition;
+        }
+
+        // Verificar status dos scripts
+        function checkScripts() {
+            const scriptDiv = document.getElementById('script-status');
+            
+            checkStatus('Tailwind CSS', typeof tailwind !== 'undefined', scriptDiv);
+            checkStatus('Chart.js', typeof Chart !== 'undefined', scriptDiv);
+            checkStatus('Supabase', typeof window.supabase !== 'undefined', scriptDiv);
+            checkStatus('Config.js', typeof window.AppConfig !== 'undefined', scriptDiv);
+        }
+
+        // Verificar configuração
+        function checkConfig() {
+            const configDiv = document.getElementById('config-status');
+            
+            if (window.AppConfig) {
+                checkStatus('AppConfig carregado', true, configDiv);
+                checkStatus('getSupabaseConfig', typeof window.AppConfig.getSupabaseConfig === 'function', configDiv);
+                checkStatus('isDevelopment', typeof window.AppConfig.isDevelopment === 'function', configDiv);
+                
+                try {
+                    const config = window.AppConfig.getSupabaseConfig();
+                    checkStatus('URL configurada', !!config.url, configDiv);
+                    checkStatus('Key configurada', !!config.key, configDiv);
+                } catch (error) {
+                    configDiv.innerHTML += `<div class="text-red-600">❌ Erro: ${error.message}</div>`;
+                }
+            } else {
+                checkStatus('AppConfig', false, configDiv);
+            }
+        }
+
+        // Testar conexão
+        async function testConnection() {
+            const resultDiv = document.getElementById('connection-result');
+            resultDiv.innerHTML = '<div class="text-yellow-600">🔄 Testando...</div>';
+            
+            try {
+                if (!window.AppConfig) {
+                    throw new Error('AppConfig não carregado');
+                }
+
+                const config = window.AppConfig.getSupabaseConfig();
+                const supabase = window.supabase.createClient(config.url, config.key);
+                
+                log('🔌 Testando conexão com Supabase...');
+                
+                const { data, error } = await supabase
+                    .from('planos_acao')
+                    .select('count')
+                    .limit(1);
+
+                if (error) throw error;
+
+                resultDiv.innerHTML = '<div class="text-green-600">✅ Conexão OK!</div>';
+                log('✅ Conexão com Supabase bem-sucedida!', 'success');
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="text-red-600">❌ Erro: ${error.message}</div>`;
+                log(`❌ Erro de conexão: ${error.message}`, 'error');
+            }
+        }
+
+        // Testar salvamento
+        async function testSave() {
+            const resultDiv = document.getElementById('connection-result');
+            resultDiv.innerHTML += '<div class="text-yellow-600">🔄 Testando salvamento...</div>';
+            
+            try {
+                if (!window.AppConfig) {
+                    throw new Error('AppConfig não carregado');
+                }
+
+                const config = window.AppConfig.getSupabaseConfig();
+                const supabase = window.supabase.createClient(config.url, config.key);
+                
+                log('💾 Testando salvamento no Supabase...');
+                
+                // Dados de teste seguindo exatamente a estrutura da tabela
+                const testData = {
+                    nome_clinica: 'Clínica Florê',
+                    nome_contato: 'Mônica',
+                    servicos_foco: ['Harmonização Facial', 'Botox', 'Teste'],
+                    posicionamento_mercado: 'Volume',
+                    diferencial: 'Teste de diferencial da clínica',
+                    investimento_gestao: 300.00,
+                    investimento_anuncios: 300.00,
+                    checklist_status: { "c1": true, "c2": false, "c3": true },
+                    gestor_nome: 'Marcelo Fruck',
+                    gestor_contato: '(51) 99305-3612'
+                };
+
+                const { data, error } = await supabase
+                    .from('planos_acao')
+                    .insert([testData])
+                    .select();
+
+                if (error) throw error;
+
+                resultDiv.innerHTML += '<div class="text-green-600">✅ Salvamento OK!</div>';
+                log(`✅ Dados salvos com sucesso! ID: ${data[0]?.id}`, 'success');
+                
+            } catch (error) {
+                resultDiv.innerHTML += `<div class="text-red-600">❌ Erro no salvamento: ${error.message}</div>`;
+                log(`❌ Erro no salvamento: ${error.message}`, 'error');
+            }
+        }
+
+        // Carregar app principal
+        function loadApp() {
+            const statusDiv = document.getElementById('app-status');
+            statusDiv.innerHTML = '<div class="text-yellow-600">🔄 Carregando app-secure.js...</div>';
+            
+            const script = document.createElement('script');
+            script.src = 'app-secure.js';
+            script.onload = () => {
+                statusDiv.innerHTML = '<div class="text-green-600">✅ App carregada!</div>';
+                log('✅ app-secure.js carregado com sucesso', 'success');
+                
+                // Verificar se a app foi instanciada
+                setTimeout(() => {
+                    if (window.clinicaApp) {
+                        statusDiv.innerHTML += '<div class="text-green-600">✅ ClinicaFloreApp instanciada!</div>';
+                        log('✅ ClinicaFloreApp instanciada com sucesso', 'success');
+                    } else {
+                        statusDiv.innerHTML += '<div class="text-red-600">❌ ClinicaFloreApp não instanciada</div>';
+                        log('❌ ClinicaFloreApp não foi instanciada', 'error');
+                    }
+                }, 1000);
+            };
+            script.onerror = () => {
+                statusDiv.innerHTML = '<div class="text-red-600">❌ Erro ao carregar app</div>';
+                log('❌ Erro ao carregar app-secure.js', 'error');
+            };
+            document.head.appendChild(script);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 Debug iniciado');
+            checkScripts();
+            checkConfig();
+        });
+    </script>
+</body>
+</html> 

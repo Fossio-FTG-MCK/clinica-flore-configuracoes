@@ -1,0 +1,72 @@
+# 🔐 Arquivos de Configuração Sensível
+config.js
+.env
+.env.local
+.env.production
+
+# 📝 Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🗃️ Banco de dados local
+*.db
+*.sqlite
+
+# 🔧 IDEs e Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 📱 Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# 📦 Node modules (se usar)
+node_modules/
+
+# 🏗️ Build files (se usar)
+dist/
+build/
+
+# 🧪 Arquivos de teste temporários
+test-temp/
+*.tmp
+
+# 🔑 Chaves e certificados
+*.key
+*.pem
+*.crt
+
+# 📋 Backups
+backup/
+*.backup
+*.bak
+
+# Credenciais e configurações sensíveis
+config.js
+.env
+*.env
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node modules (se houver)
+node_modules/
+
+# Arquivos de backup
+*.bak
+*~
+
+# Arquivos de debug temporários
+debug-*.html 
