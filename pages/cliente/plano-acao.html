@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica Florê - Formulário Exclusivo</title>
+    <title>Plano de Ação Digital | Clínica Florê - Área do Cliente</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="midias/512x512-BK.png">
-    <link rel="apple-touch-icon" href="midias/512x512-BK.png">
+    <link rel="icon" type="image/png" href="../../midias/512x512-BK.png">
+    <link rel="apple-touch-icon" href="../../midias/512x512-BK.png">
     
     <!-- Meta Tags -->
-    <meta name="description" content="Plano de Ação Digital interativo para Clínica Florê - Saúde, Estética e Bem-estar">
+    <meta name="description" content="Plano de Ação Digital interativo para Clínica Florê - Área exclusiva do cliente">
     <meta name="keywords" content="clínica, estética, tráfego pago, harmonização facial, botox">
     <meta name="author" content="Marcelo Fruck - Gestor de Tráfego">
     
@@ -25,7 +25,7 @@
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <!-- Configuração GitHub -->
-    <script src="config-github.js"></script>
+    <script src="../../config-github.js"></script>
     
     <!-- 🔧 CONFIGURAÇÃO EMBUTIDA - ACESSO EXCLUSIVO CLIENTE -->
     <script>
@@ -51,26 +51,6 @@
                 };
             }
         };
-        
-        // Contador de caracteres para diferencial
-        const diferencialInput = document.getElementById('clinic-differential');
-        const charCountElement = document.getElementById('char-count');
-        
-        if (diferencialInput && charCountElement) {
-            diferencialInput.addEventListener('input', function() {
-                const currentLength = this.value.length;
-                charCountElement.textContent = currentLength;
-                
-                // Mudar cor se próximo do limite
-                if (currentLength > 450) {
-                    charCountElement.style.color = '#ef4444'; // vermelho
-                } else if (currentLength > 400) {
-                    charCountElement.style.color = '#f59e0b'; // laranja
-                } else {
-                    charCountElement.style.color = '#6b7280'; // cinza padrão
-                }
-            });
-        }
         
         console.log('🌟 Clínica Florê - Acesso exclusivo configurado para cliente');
     </script>
@@ -203,16 +183,16 @@
 </head>
 <body class="antialiased">
 
+
+
     <div class="container mx-auto max-w-5xl p-4 sm:p-8">
 
-        <!-- Header Exclusivo para Cliente -->
-        <header class="text-center my-8 md:my-12 bg-gradient-to-r from-[#84a98c] to-[#6d8a73] text-white p-8 rounded-2xl shadow-lg">
-            <div class="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-full text-sm inline-block mb-4">
-                🌟 Acesso Exclusivo - Mônica
+        <header class="text-center my-8 md:my-12">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#84a98c]">Plano de Ação Digital</h1>
+            <p class="mt-2 text-lg sm:text-xl text-gray-600">Clínica Florê | Área do Cliente</p>
+            <div class="mt-4 inline-flex items-center px-4 py-2 bg-blue-50 rounded-full">
+                <span class="text-sm text-blue-700">👤 Acesso exclusivo para Mônica</span>
             </div>
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold">Plano de Ação Digital</h1>
-            <p class="mt-2 text-lg sm:text-xl opacity-90">Clínica Florê | Saúde, Estética e Bem-estar</p>
-            <p class="mt-4 text-sm opacity-75">📋 Formulário de Configuração Estratégica</p>
         </header>
 
         <main>
@@ -461,7 +441,7 @@
         
         <footer class="text-center mt-12 py-8 border-t border-gray-200">
             <div class="flex items-center justify-center mb-4">
-                <img src="midias/512x512-BK.png" alt="Logo Clínica Florê" class="w-12 h-12 mr-3">
+                <img src="../../midias/512x512-BK.png" alt="Logo Clínica Florê" class="w-12 h-12 mr-3">
                 <div>
                     <p class="font-bold text-lg text-gray-800">Marcelo Fruck</p>
                     <p class="text-gray-600">Gestor de Tráfego</p>
@@ -496,6 +476,35 @@
     </div>
 
     <!-- Aplicação Principal Segura -->
-    <script src="app-secure.js"></script>
+    <script src="../../app-secure.js"></script>
+    
+    <!-- Sidebar Component -->
+    <script src="../../components/sidebar.js"></script>
+    <script>
+        // Inicializa o sidebar
+        new SidebarComponent();
+    </script>
+    
+    <script>
+        // Contador de caracteres para diferencial
+        const diferencialInput = document.getElementById('clinic-differential');
+        const charCountElement = document.getElementById('char-count');
+        
+        if (diferencialInput && charCountElement) {
+            diferencialInput.addEventListener('input', function() {
+                const currentLength = this.value.length;
+                charCountElement.textContent = currentLength;
+                
+                // Mudar cor se próximo do limite
+                if (currentLength > 450) {
+                    charCountElement.style.color = '#ef4444'; // vermelho
+                } else if (currentLength > 400) {
+                    charCountElement.style.color = '#f59e0b'; // laranja
+                } else {
+                    charCountElement.style.color = '#6b7280'; // cinza padrão
+                }
+            });
+        }
+    </script>
 </body>
 </html>

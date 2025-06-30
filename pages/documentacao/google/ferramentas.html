@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas de Marketing Digital | Clínica Florê</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../../midias/512x512-BK.png">
+    <link rel="apple-touch-icon" href="../../../midias/512x512-BK.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #0ea5e9;
+        }
+        .category-badge {
+            position: absolute;
+            top: -8px;
+            right: 16px;
+            background: linear-gradient(45deg, #0ea5e9, #06b6d4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-8">
+            <h1 class="text-4xl font-bold text-slate-800">Ferramentas de Marketing Digital</h1>
+            <p class="mt-2 text-lg text-slate-600">Compilado de ferramentas essenciais para análise, criação e otimização - Clínica Florê</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">Análise</span>
+                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Criação</span>
+                <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full">Otimização</span>
+                <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm font-medium rounded-full">Pesquisa</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Análise e Pesquisa -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </div>
+                Análise e Pesquisa
+            </h2>
+            
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Google Analytics -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Analytics</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">📊</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Google Analytics</h3>
+                            <p class="text-sm text-slate-500">Análise de tráfego</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Ferramenta fundamental para análise de tráfego, comportamento do usuário e conversões no site.</p>
+                    <a href="https://analytics.google.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Google Search Console -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">SEO</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🔍</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Search Console</h3>
+                            <p class="text-sm text-slate-500">Performance orgânica</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Monitora performance nas pesquisas, indexação e identifica oportunidades de otimização SEO.</p>
+                    <a href="https://search.google.com/search-console" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- SEMrush -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Competitiva</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🎯</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">SEMrush</h3>
+                            <p class="text-sm text-slate-500">Análise competitiva</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Análise completa de concorrentes, palavras-chave e oportunidades de mercado.</p>
+                    <a href="https://semrush.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Ubersuggest -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Keywords</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🔑</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Ubersuggest</h3>
+                            <p class="text-sm text-slate-500">Palavras-chave</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Ferramenta de Neil Patel para pesquisa de palavras-chave e análise de SEO.</p>
+                    <a href="https://neilpatel.com/ubersuggest/" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Similar Web -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Tráfego</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🌐</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">SimilarWeb</h3>
+                            <p class="text-sm text-slate-500">Análise de tráfego</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Análise detalhada de tráfego de qualquer site, incluindo fontes e comportamento.</p>
+                    <a href="https://similarweb.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Answer The Public -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Insights</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">💡</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Answer The Public</h3>
+                            <p class="text-sm text-slate-500">Perguntas dos usuários</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Descobre as perguntas que as pessoas fazem sobre um tópico específico.</p>
+                    <a href="https://answerthepublic.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design e Criação -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h4a2 2 0 002-2V9a2 2 0 00-2-2H7a2 2 0 00-2 2v6a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                Design e Criação
+            </h2>
+            
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Canva -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Design</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🎨</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Canva</h3>
+                            <p class="text-sm text-slate-500">Design intuitivo</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Plataforma de design fácil de usar para criar posts, stories, banners e materiais gráficos.</p>
+                    <a href="https://canva.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Unsplash -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Imagens</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">📸</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Unsplash</h3>
+                            <p class="text-sm text-slate-500">Fotos gratuitas</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Biblioteca de fotos de alta qualidade e gratuitas para uso comercial.</p>
+                    <a href="https://unsplash.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Remove.bg -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Edição</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">✂️</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Remove.bg</h3>
+                            <p class="text-sm text-slate-500">Remoção de fundo</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Remove automaticamente o fundo de imagens com precisão usando IA.</p>
+                    <a href="https://remove.bg" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Figma -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Design Pro</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🔧</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Figma</h3>
+                            <p class="text-sm text-slate-500">Design profissional</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Ferramenta profissional de design colaborativo para interfaces e layouts avançados.</p>
+                    <a href="https://figma.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Loom -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Vídeo</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🎥</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Loom</h3>
+                            <p class="text-sm text-slate-500">Gravação de tela</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Gravação fácil e rápida de tela e câmera para tutoriais e apresentações.</p>
+                    <a href="https://loom.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Giphy -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">GIFs</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🎭</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Giphy</h3>
+                            <p class="text-sm text-slate-500">GIFs e stickers</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Biblioteca completa de GIFs e stickers para tornar conteúdo mais dinâmico.</p>
+                    <a href="https://giphy.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Otimização e Teste -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                Otimização e Teste
+            </h2>
+            
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- PageSpeed Insights -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Performance</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">⚡</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">PageSpeed Insights</h3>
+                            <p class="text-sm text-slate-500">Velocidade do site</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Analisa a velocidade e performance de carregamento do site em desktop e mobile.</p>
+                    <a href="https://pagespeed.web.dev" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- GTmetrix -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Performance</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">📊</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">GTmetrix</h3>
+                            <p class="text-sm text-slate-500">Análise detalhada</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Análise detalhada de performance com relatórios completos e sugestões de melhoria.</p>
+                    <a href="https://gtmetrix.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Hotjar -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">UX</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🔥</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Hotjar</h3>
+                            <p class="text-sm text-slate-500">Mapas de calor</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Mapas de calor, gravações de sessão e feedback para entender comportamento do usuário.</p>
+                    <a href="https://hotjar.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Google Optimize -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Teste A/B</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🧪</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Google Optimize</h3>
+                            <p class="text-sm text-slate-500">Testes A/B</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Plataforma para testes A/B e personalização de experiências no site.</p>
+                    <a href="https://optimize.google.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Crazy Egg -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Heatmaps</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🥚</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Crazy Egg</h3>
+                            <p class="text-sm text-slate-500">Análise de cliques</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Mapas de calor e análise de cliques para otimizar layout e conversões.</p>
+                    <a href="https://crazyegg.com" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Lighthouse -->
+                <div class="tool-card bg-white p-6 rounded-lg shadow-lg relative">
+                    <div class="category-badge">Auditoria</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <span class="text-2xl">🏠</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Lighthouse</h3>
+                            <p class="text-sm text-slate-500">Auditoria completa</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4">Auditoria completa de performance, acessibilidade, SEO e melhores práticas.</p>
+                    <a href="https://web.dev/measure/" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+                        Acessar ferramenta
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white p-12 rounded-lg">
+            <h2 class="text-3xl font-bold mb-4">Maximize seus Resultados</h2>
+            <p class="text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+                Essas ferramentas são a base para uma estratégia de marketing digital eficaz. 
+                Use-as de forma integrada para obter insights valiosos e otimizar continuamente seus resultados.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Análise</span>
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Criação</span>
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Otimização</span>
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Resultados</span>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Sidebar Component -->
+    <script src="../../../components/sidebar.js"></script>
+    <script>
+        // Inicializa o sidebar
+        new SidebarComponent();
+    </script>
+</body>
+</html>

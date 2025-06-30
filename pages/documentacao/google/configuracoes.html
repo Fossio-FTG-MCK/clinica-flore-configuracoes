@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação Técnica - Google Ads & Analytics | Clínica Florê</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../../midias/512x512-BK.png">
+    <link rel="apple-touch-icon" href="../../../midias/512x512-BK.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Blue & Slate -->
+    <!-- Application Structure Plan: A comprehensive, single-page technical manual. The structure is a chronological deep-dive, starting with a strategic overview and then dedicating a major, expandable section to each core tool (GTM, GA4, Conversion Tracking). Each section explains the 'What', 'Why', and provides a detailed, step-by-step 'How', integrating user-provided screenshots as interactive 'Proof Points'. This design was chosen to serve as an in-depth educational resource and an auditable log, making complex technical configurations digestible and verifiable for both the manager and the client. -->
+    <!-- Visualization & Content Choices: The primary "visualization" is the logical structure itself, using collapsible accordions (HTML/JS) for the step-by-step guides to manage information density. User screenshots are presented within styled "Proof Point" cards, turning static images into evidence that supports the narrative. Naming conventions are displayed in styled code blocks (HTML/CSS) for clarity and copy-paste ease. A visual data flow diagram (HTML/CSS Flexbox) is included to simplify the GTM -> GA4 relationship. This ensures a text-rich, highly detailed document remains navigable and understandable without using any forbidden libraries. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+        }
+        .code {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #f1f5f9; /* slate-100 */
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #475569; /* slate-600 */
+        }
+        .pro-tip {
+            background-color: #fefce8; /* yellow-50 */
+            border-left: 4px solid #facc15; /* yellow-400 */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+
+
+    <div class="bg-white">
+        <header class="container mx-auto px-6 py-8">
+            <h1 class="text-4xl">Manual de Operações Técnicas - Google</h1>
+            <p class="mt-2 text-lg text-slate-600">Projeto de Gestão de Tráfego para <span class="font-semibold text-blue-600">Clínica Florê</span></p>
+            <p class="text-sm text-slate-500">Documento gerado em: 28 de Junho de 2025</p>
+        </header>
+    </div>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- INTRODUÇÃO -->
+        <section class="mb-16">
+            <h2 class="text-3xl mb-4">Introdução: A Filosofia de Trabalho</h2>
+            <p class="text-lg leading-relaxed max-w-4xl">
+                Este documento não é apenas um registro, mas a planta baixa da nossa inteligência de marketing. O sucesso em tráfego pago não vem de "apertar botões", mas de construir um ecossistema de dados onde cada real investido é rastreável e cada resultado é mensurável. Para isso, implementamos uma estrutura profissional usando o <b class="font-semibold">Google Tag Manager (GTM)</b> como fundação e o <b class="font-semibold">Google Analytics 4 (GA4)</b> como cérebro. A seguir, detalhamos cada passo da construção desta base sólida.
+            </p>
+        </section>
+
+        <!-- FLUXO DE DADOS -->
+        <div class="my-16">
+            <h3 class="text-2xl text-center mb-6">Nosso Fluxo de Dados Simplificado</h3>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="flex flex-col md:flex-row items-center justify-around text-center">
+                    <div class="flex-1 p-4">
+                        <div class="mx-auto w-16 h-16 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full text-2xl font-bold">1</div>
+                        <h4 class="mt-4 font-semibold text-lg">Ação do Usuário</h4>
+                        <p class="text-sm text-slate-500">Clique, visita, etc.</p>
+                    </div>
+                    <div class="text-4xl text-slate-300 mx-4 hidden md:block">&rarr;</div>
+                    <div class="text-4xl text-slate-300 my-4 md:hidden">&darr;</div>
+                    <div class="flex-1 p-4">
+                        <div class="mx-auto w-16 h-16 flex items-center justify-center bg-orange-100 text-orange-600 rounded-full text-2xl font-bold">2</div>
+                        <h4 class="mt-4 font-semibold text-lg">Google Tag Manager</h4>
+                        <p class="text-sm text-slate-500">Identifica e dispara a tag correta.</p>
+                    </div>
+                     <div class="text-4xl text-slate-300 mx-4 hidden md:block">&rarr;</div>
+                     <div class="text-4xl text-slate-300 my-4 md:hidden">&darr;</div>
+                    <div class="flex-1 p-4">
+                        <div class="mx-auto w-16 h-16 flex items-center justify-center bg-purple-100 text-purple-600 rounded-full text-2xl font-bold">3</div>
+                        <h4 class="mt-4 font-semibold text-lg">Google Analytics 4</h4>
+                        <p class="text-sm text-slate-500">Recebe, processa e analisa o dado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEÇÕES TÉCNICAS -->
+        <div class="space-y-8 mt-16">
+
+            <!-- GTM -->
+            <div class="bg-white p-8 rounded-lg shadow-lg" id="gtm">
+                <h3 class="text-2xl mb-4">Fase 1: Google Tag Manager (GTM) - A Fundação</h3>
+                <p class="mb-6">O GTM é a nossa "caixa de ferramentas" central. A instalação dele é o primeiro e mais crítico passo para garantir agilidade e organização.</p>
+                <div class="accordion-item">
+                    <button class="accordion-header w-full text-left font-semibold text-lg p-4 bg-slate-50 hover:bg-slate-100 rounded-t-lg flex justify-between items-center">
+                        <span>Detalhes da Implementação do GTM</span>
+                        <span class="text-xl">+</span>
+                    </button>
+                    <div class="accordion-content border border-t-0 p-6 rounded-b-lg">
+                        <b class="font-semibold">O que foi feito:</b> Criamos uma conta GTM e instalamos seu código em todas as páginas do site.<br>
+                        <b class="font-semibold">Como:</b> Obtivemos os 2 snippets de código do GTM e os inserimos no `<head>` e `<body>` do site.<br>
+                        <b class="font-semibold">Por que é essencial:</b> Centraliza todos os futuros códigos de rastreamento (Pixels, etc.) em um só lugar, evitando a necessidade de alterar o código do site a cada nova ferramenta.
+                    </div>
+                </div>
+            </div>
+
+            <!-- GA4 -->
+            <div class="bg-white p-8 rounded-lg shadow-lg" id="ga4">
+                <h3 class="text-2xl mb-4">Fase 2: Google Analytics 4 (GA4) - O Cérebro Analítico</h3>
+                <p class="mb-6">Com a fundação pronta, instalamos o cérebro. O GA4 é a ferramenta que coletará e analisará o comportamento de todos os visitantes.</p>
+                <div class="accordion-item space-y-2">
+                    <button class="accordion-header w-full text-left font-semibold text-lg p-4 bg-slate-50 hover:bg-slate-100 rounded-t-lg flex justify-between items-center">
+                        <span>Passo 2.1: Criação e Instalação da Tag do GA4</span>
+                        <span class="text-xl">+</span>
+                    </button>
+                    <div class="accordion-content border border-t-0 p-6 rounded-b-lg">
+                        <p class="mb-4"><b class="font-semibold">O que foi feito:</b> Criamos a propriedade GA4, obtivemos o ID da Métrica e instalamos a tag de configuração principal via GTM.</p>
+                        
+                        <b class="font-semibold text-slate-700">Ponto de Atenção (Adaptação da Interface):</b>
+                        <p class="mb-4">Durante a configuração da tag no GTM, a interface do Google nos apresentou a opção <code class="code">Tag do Google</code> em vez da antiga <code class="code">Google Analytics: configuração do GA4</code>. Adaptamos o processo selecionando a nova opção correta, como visto na imagem que você enviou.</p>
+
+                        <b class="font-semibold text-slate-700">Verificação de Sucesso:</b>
+                        <p class="mb-4">Após a publicação da tag no GTM, realizamos um teste em duas etapas para garantir 100% de funcionalidade:</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="border p-4 rounded-lg">
+                                <b class="font-semibold">1. Teste no GTM Tag Assistant:</b> A imagem de prova (`image_fca115.png`) confirmou que a tag <code class="code">G-N6XB60HN8L</code> estava sendo corretamente **disparada** em nosso navegador.
+                            </div>
+                            <div class="border p-4 rounded-lg">
+                                 <b class="font-semibold">2. Teste no GA4 DebugView:</b> A imagem de prova (`image_fba8ba.png`) confirmou que o GA4 estava **recebendo** os eventos (`page_view`, `session_start`) em tempo real.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conversão -->
+            <div class="bg-white p-8 rounded-lg shadow-lg" id="conversion">
+                <h3 class="text-2xl mb-4">Fase 3: Rastreamento de Conversão - O "Gol"</h3>
+                <p class="mb-6">Um site sem rastreamento de conversão é como um time de futebol que não sabe onde fica o gol. Nesta fase, ensinamos o Google a identificar a ação mais valiosa do usuário: se tornar um lead.</p>
+                <div class="accordion-item space-y-2">
+                    <button class="accordion-header w-full text-left font-semibold text-lg p-4 bg-slate-50 hover:bg-slate-100 rounded-t-lg flex justify-between items-center">
+                        <span>Passo 3.1: Configurando o Evento `generate_lead`</span>
+                        <span class="text-xl">+</span>
+                    </button>
+                    <div class="accordion-content border border-t-0 p-6 rounded-b-lg">
+                        <p class="mb-4"><b class="font-semibold">O que foi feito:</b> Implementamos um sistema completo para rastrear cliques no botão "Agende uma consulta" e registrá-los como um evento de conversão chamado <code class="code">generate_lead</code>.</p>
+                        <ol class="list-decimal list-inside space-y-2 mb-4">
+                            <li><b>Habilitação de Variáveis de Clique:</b> Ativamos todas as variáveis de clique no GTM para que ele pudesse "ler" os detalhes dos cliques.</li>
+                            <li><b>Criação de Acionador:</b> Configuramos um acionador específico para disparar apenas quando o texto do elemento clicado fosse exatamente "Agende uma consulta".</li>
+                            <li><b>Criação da Tag de Evento:</b> Criamos a tag <code class="code">GA4 - Evento - Generate Lead</code>, que é disparada pelo acionador acima e envia o evento ao GA4.</li>
+                        </ol>
+
+                        <div class="pro-tip p-4 rounded-md mb-4">
+                            <b class="font-semibold">Padrão Profissional de Publicação:</b> Adotamos um padrão claro para o histórico de versões do GTM, facilitando futuras auditorias. Para esta etapa, usamos:<br>
+                            - <b class="font-semibold">Nome:</b> <code class="code">Criação Evento de Lead (generate_lead)</code><br>
+                            - <b class="font-semibold">Descrição:</b> <code class="code">Adicionado o rastreamento do principal evento de conversão do site...</code>
+                        </div>
+
+                        <b class="font-semibold text-slate-700">Verificação de Sucesso:</b>
+                        <p class="mb-4">A imagem (`image_fba8ba.png`) do DebugView provou que o evento <code class="code">generate_lead</code> foi recebido com sucesso pelo GA4 após o clique no botão.</p>
+                    </div>
+
+                    <button class="accordion-header w-full text-left font-semibold text-lg p-4 bg-slate-50 hover:bg-slate-100 flex justify-between items-center">
+                        <span>Passo 3.2: Oficializando a Conversão no GA4</span>
+                        <span class="text-xl">+</span>
+                    </button>
+                    <div class="accordion-content border border-t-0 p-6 rounded-b-lg">
+                        <b class="font-semibold text-slate-700">Ponto de Atenção (Adaptação de Processo):</b>
+                        <p class="mb-4">Ao acessar a tela de "Eventos" no GA4 para marcar nossa conversão, notamos que o evento <code class="code">generate_lead</code> ainda não havia sido processado na lista principal (comprovado pela imagem `image_fba1ba.png`).</p>
+                        
+                        <b class="font-semibold text-slate-700">A Solução Proativa:</b>
+                        <p>Em vez de esperar, fomos diretamente à seção <b class="font-semibold">"Conversões"</b>. Clicamos em "Novo evento de conversão" e registramos o nome <code class="code">generate_lead</code> manualmente. Essa ação instrui o GA4 a tratar este evento como uma conversão oficial a partir do momento de sua chegada, garantindo que nenhum dado seja perdido.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONCLUSÃO -->
+        <section class="mt-16 text-center bg-blue-600 text-white p-12 rounded-lg">
+            <h2 class="text-3xl font-bold">Fase de Fundação Concluída</h2>
+            <p class="mt-4 text-lg max-w-3xl mx-auto leading-relaxed">
+                Completamos com sucesso a espinha dorsal de todo o sistema de rastreamento. Temos agora uma base de dados confiável e uma meta de conversão primária 100% operacional. Estamos perfeitamente posicionados para iniciar as campanhas de tráfego com a certeza de que cada ação será medida e otimizada com precisão.
+            </p>
+            <p class="mt-6 font-semibold">Próximo passo: Configuração das Plataformas de Anúncios (Meta Ads).</p>
+        </section>
+
+    </main>
+    
+    <!-- Sidebar Component -->
+    <script src="../../../components/sidebar.js"></script>
+    <script>
+        // Inicializa o sidebar
+        new SidebarComponent();
+    </script>
+    
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionContent = button.nextElementSibling;
+                button.classList.toggle('active');
+
+                if (button.classList.contains('active')) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                    button.querySelector('span:last-child').textContent = '-';
+                } else {
+                    accordionContent.style.maxHeight = '0px';
+                    button.querySelector('span:last-child').textContent = '+';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

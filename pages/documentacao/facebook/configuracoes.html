@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueprint Interativo - Meta/Facebook Ads | Clínica Florê</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../../midias/512x512-BK.png">
+    <link rel="apple-touch-icon" href="../../../midias/512x512-BK.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Slate, Sky Blue, Emerald Green) -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive "Project Blueprint," guiding the user through the four key phases of the Meta setup. A top navigation bar allows for quick jumps between sections: Estratégia, Ativos, Rastreamento, and Segurança. Each section uses a mix of cards, interactive checklists, and visual flow diagrams (built with HTML/CSS) to break down complex information. This structure was chosen to transform a linear technical document into an exploratory and educational experience, highlighting key challenges and solutions to demonstrate expertise. -->
+    <!-- Visualization & Content Choices: The core visualizations are process-based, not data-based. A 'Before & After' component visually contrasts the initial amateur setup with the new professional structure (Goal: Compare). A 'Rastreamento' section uses a Flexbox-based flow diagram to illustrate the GTM event tracking logic (Goal: Organize/Inform). The domain verification challenge is presented as an interactive 'Problem/Solution' component, using icons and color to highlight the failed attempt and the successful adaptation (Goal: Inform/Engage). JavaScript-powered accordions are used to reveal detailed steps, keeping the UI clean (Goal: Organize). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #0ea5e9; /* sky-500 */
+            margin-top: 1rem;
+        }
+        .step-item {
+            border-left: 2px dashed #94a3b8; /* slate-400 */
+        }
+         .step-item:last-child {
+            border-left: none;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-slate-800">Projeto Clínica Florê</h1>
+                <p class="text-sm text-sky-600 font-semibold">Blueprint Técnico: Ecossistema Meta</p>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#estrategia" class="text-slate-600 hover:text-sky-500 transition">Estratégia</a>
+                <a href="#ativos" class="text-slate-600 hover:text-sky-500 transition">Ativos</a>
+                <a href="#rastreamento" class="text-slate-600 hover:text-sky-500 transition">Rastreamento</a>
+                <a href="#seguranca" class="text-slate-600 hover:text-sky-500 transition">Segurança</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Seção 0: Estratégia -->
+        <section id="estrategia" class="py-16">
+            <h2 class="text-3xl font-bold text-slate-800 section-title mb-8">Fase 0: Auditoria e Estratégia</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mb-12">O ponto de partida de qualquer projeto de excelência é um diagnóstico preciso. Analisámos o cenário inicial para definir um plano de ação que migrasse a operação de um modelo amador para uma estrutura profissional, segura e pronta para escalar.</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Cenário Inicial -->
+                <div class="bg-white p-8 rounded-lg shadow-lg border border-red-200">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 flex items-center justify-center bg-red-100 rounded-full text-2xl">🌪️</div>
+                        <h3 class="text-xl font-semibold text-red-800">Cenário Inicial: Desorganizado</h3>
+                    </div>
+                    <ul class="mt-4 space-y-2 text-sm list-disc list-inside text-red-700">
+                        <li>Anúncios via conta pessoal ("impulsionamentos").</li>
+                        <li>Gerenciadores de Negócios (BM) criados, mas vazios.</li>
+                        <li>Alto risco de segurança e sem controlo profissional.</li>
+                        <li>Sem capacidade de partilha de acesso com gestores.</li>
+                    </ul>
+                </div>
+                <!-- Decisão Estratégica -->
+                <div class="bg-white p-8 rounded-lg shadow-lg border border-emerald-200">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 flex items-center justify-center bg-emerald-100 rounded-full text-2xl">🏗️</div>
+                        <h3 class="text-xl font-semibold text-emerald-800">Decisão Estratégica: Estrutura Profissional</h3>
+                    </div>
+                    <ul class="mt-4 space-y-2 text-sm list-disc list-inside text-emerald-700">
+                        <li>Abandonar por completo a conta de anúncios pessoal.</li>
+                        <li>Centralizar toda a operação no BM "CLÍNICA FLORÊ".</li>
+                        <li>Criar todos os ativos do zero (Conta de anúncios, Pixel).</li>
+                        <li>Estabelecer uma base segura, escalável e mensurável.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 1: Ativos -->
+        <section id="ativos" class="py-16 bg-slate-100 rounded-2xl">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-slate-800 section-title mb-8">Fase 1: Configuração dos Ativos</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mb-12">Com a estratégia definida, construímos os pilares da nova estrutura dentro do Gerenciador de Negócios. Cada ativo foi criado do zero para garantir um ambiente limpo e profissional.</p>
+                <div id="checklist-ativos" class="space-y-4">
+                    <!-- Item Checklist -->
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4 transition-all">
+                        <span class="text-2xl text-emerald-500">✅</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Conta de Anúncios Profissional Criada</h4>
+                            <p class="text-sm text-slate-500">Nome: `Clínica Florê - Anúncios` com Fuso e Moeda corretos.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4 transition-all">
+                        <span class="text-2xl text-emerald-500">✅</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Permissões Administrativas Atribuídas</h4>
+                            <p class="text-sm text-slate-500">"Controle Total" garantido para a gestão da conta.</p>
+                        </div>
+                    </div>
+                     <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4 transition-all">
+                        <span class="text-2xl text-emerald-500">✅</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Método de Pagamento Configurado</h4>
+                            <p class="text-sm text-slate-500">Conta pronta para receber investimentos de campanha.</p>
+                        </div>
+                    </div>
+                     <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4 transition-all">
+                        <span class="text-2xl text-emerald-500">✅</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Novo Pixel da Meta Criado</h4>
+                            <p class="text-sm text-slate-500">Nome: `Pixel - Clínica Florê` para garantir um rastreamento limpo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 2: Rastreamento -->
+        <section id="rastreamento" class="py-16">
+            <h2 class="text-3xl font-bold text-slate-800 section-title mb-8">Fase 2: Implementação do Rastreamento</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mb-12">Esta é a fase mais técnica, onde conectamos o site ao ecossistema da Meta usando o GTM como ponte. A precisão aqui define a nossa capacidade de medir e otimizar campanhas.</p>
+            
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="font-semibold text-xl mb-6 text-center text-slate-700">Fluxo de Rastreamento de Conversão via GTM</h3>
+                <div class="flex flex-col md:flex-row items-stretch text-center">
+                    <!-- Step 1 -->
+                    <div class="flex-1 p-4 flex flex-col items-center">
+                        <div class="w-16 h-16 mb-2 flex items-center justify-center bg-sky-100 text-sky-600 rounded-full text-2xl">🖱️</div>
+                        <h4 class="font-semibold">Ação do Utilizador</h4>
+                        <p class="text-sm text-slate-500 mt-1">Clica em "Agende uma consulta".</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center step-item md:border-l-0 md:border-t-2 md:w-16 h-16">
+                         <span class="text-2xl text-slate-400 rotate-90 md:rotate-0">→</span>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="flex-1 p-4 flex flex-col items-center">
+                        <div class="w-16 h-16 mb-2 flex items-center justify-center bg-sky-100 text-sky-600 rounded-full text-2xl">🎯</div>
+                        <h4 class="font-semibold">Acionador GTM</h4>
+                        <p class="text-sm text-slate-500 mt-1">Regra "Click Text é igual a..." identifica a ação.</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center step-item md:border-l-0 md:border-t-2 md:w-16 h-16">
+                         <span class="text-2xl text-slate-400 rotate-90 md:rotate-0">→</span>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="flex-1 p-4 flex flex-col items-center">
+                        <div class="w-16 h-16 mb-2 flex items-center justify-center bg-sky-100 text-sky-600 rounded-full text-2xl">🏷️</div>
+                        <h4 class="font-semibold">Tag de Evento Meta</h4>
+                        <p class="text-sm text-slate-500 mt-1">Tag `Meta - Evento - Lead` é disparada.</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center step-item md:border-l-0 md:border-t-2 md:w-16 h-16">
+                         <span class="text-2xl text-slate-400 rotate-90 md:rotate-0">→</span>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="flex-1 p-4 flex flex-col items-center">
+                         <div class="w-16 h-16 mb-2 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-full text-2xl">🎉</div>
+                        <h4 class="font-semibold">Sucesso!</h4>
+                        <p class="text-sm text-slate-500 mt-1">Evento `Lead` é recebido e processado pela Meta.</p>
+                    </div>
+                </div>
+                <div class="mt-8 pt-6 border-t">
+                    <div id="accordion-rastreamento">
+                        <button class="accordion-header w-full text-left font-semibold p-3 bg-slate-50 hover:bg-slate-100 rounded-t-lg flex justify-between items-center">
+                            <span>💡 Ponto de Adaptação: Modelo de Tag do GTM</span>
+                            <span class="text-xl">+</span>
+                        </button>
+                        <div class="accordion-content border border-t-0 p-4 rounded-b-lg">
+                           <p class="text-sm text-slate-600">Constatámos que o GTM não possui mais um modelo de tag nativo da Meta. A solução profissional foi navegar até à "Galeria de modelos da comunidade" e instalar o modelo oficial verificado `Facebook Pixel` de `facebookarchive`. Esta adaptação foi crucial para o sucesso da implementação.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: Segurança -->
+        <section id="seguranca" class="py-16 bg-slate-100 rounded-2xl">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-3xl font-bold text-slate-800 section-title mb-8">Fase 3: Segurança e Conformidade</h2>
+                 <p class="text-lg text-slate-600 max-w-3xl mb-12">Para garantir que o rastreamento funcione em todos os dispositivos (especialmente Apple) e estejamos em conformidade com as políticas da Meta, executámos os passos de segurança obrigatórios.</p>
+
+                <div id="checklist-seguranca" class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4 transition-all">
+                        <span class="text-2xl text-emerald-500">✅</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Verificação de Domínio Configurada</h4>
+                            <p class="text-sm text-slate-500">Domínio verificado no Business Manager para iOS 14.5+</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4 transition-all">
+                        <span class="text-2xl text-emerald-500">✅</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Eventos de Conversão Priorizados</h4>
+                            <p class="text-sm text-slate-500">Máximo de 8 eventos configurados por domínio</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4 transition-all">
+                        <span class="text-2xl text-emerald-500">✅</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Política de Privacidade Atualizada</h4>
+                            <p class="text-sm text-slate-500">Conformidade com LGPD e políticas da Meta</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusão -->
+        <section class="mt-16 text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white p-12 rounded-lg">
+            <h2 class="text-3xl font-bold">Ecossistema Meta Completamente Configurado</h2>
+            <p class="mt-4 text-lg max-w-3xl mx-auto leading-relaxed">
+                A infraestrutura Meta está agora 100% operacional e otimizada. Temos rastreamento preciso, conformidade com todas as políticas e uma base sólida para campanhas de alto desempenho. O sistema está preparado para escalar e entregar resultados consistentes.
+            </p>
+            <p class="mt-6 font-semibold">Status: ✅ Pronto para Campanhas</p>
+        </section>
+
+    </main>
+    
+    <!-- Sidebar Component -->
+    <script src="../../../components/sidebar.js"></script>
+    <script>
+        // Inicializa o sidebar
+        new SidebarComponent();
+    </script>
+    
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionContent = button.nextElementSibling;
+                button.classList.toggle('active');
+
+                if (button.classList.contains('active')) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                    button.querySelector('span:last-child').textContent = '-';
+                } else {
+                    accordionContent.style.maxHeight = '0px';
+                    button.querySelector('span:last-child').textContent = '+';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
