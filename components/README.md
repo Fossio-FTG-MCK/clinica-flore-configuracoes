@@ -70,7 +70,7 @@ O componente detecta automaticamente a profundidade:
 
 ```
 🏠 Dashboard (index.html)
-👤 Área do Cliente (pages/cliente/plano-acao.html)
+👤 Área do Cliente (pages/area-do-cliente/area-do-cliente.html)
 👨‍💼 Painel Admin (pages/admin/dashboard.html)
 ───────────────────────────────────────────────
 📖 DOCUMENTAÇÃO
@@ -150,7 +150,7 @@ new SidebarComponent(basePath)
 ### ✅ Páginas Atualizadas
 
 - [x] `index.html` - Dashboard principal
-- [x] `pages/cliente/plano-acao.html` - Área do cliente
+- [x] `pages/area-do-cliente/area-do-cliente.html` - Área do cliente
 - [x] `pages/admin/dashboard.html` - Painel administrativo
 - [x] `pages/documentacao/google/configuracoes.html` - Setup Google
 - [x] `pages/documentacao/google/ferramentas.html` - Ferramentas

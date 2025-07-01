@@ -11,7 +11,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 16rem; /* 256px */
+    width: 25rem; /* 400px */
     height: 100vh;
     background-color: white;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -222,16 +222,10 @@
     color: #374151;
 }
 
-/* Conteúdo principal */
+/* Conteúdo principal - layout específico definido em cada página */
 .main-content {
     flex: 1;
     transition: margin-left 0.3s ease-in-out;
-}
-
-@media (min-width: 1024px) {
-    .main-content {
-        margin-left: 16rem; /* 256px */
-    }
 }
 
 @media (max-width: 1023px) {

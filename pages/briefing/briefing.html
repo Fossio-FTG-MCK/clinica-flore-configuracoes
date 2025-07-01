@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Briefing - Clínica Florê | Conceitos e Estratégia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #84a98c 0%, #52796f 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .step-counter {
+            background: linear-gradient(135deg, #84a98c, #52796f);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(132, 169, 140, 0.3);
+        }
+        .process-line {
+            position: absolute;
+            left: 24px;
+            top: 60px;
+            bottom: -40px;
+            width: 2px;
+            background: linear-gradient(to bottom, #84a98c, #c3cfe2);
+        }
+        .section-divider {
+            background: linear-gradient(90deg, transparent 0%, #84a98c 50%, transparent 100%);
+            height: 2px;
+            margin: 2rem 0;
+        }
+        
+        /* Layout responsivo para sidebar */
+        header {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        main {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 1024px) {
+            header {
+                margin-left: 16rem; /* Tamanho exato do sidebar */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            
+            main {
+                margin-left: calc(16rem + 40px); /* Sidebar + 40px de gap */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            
+            footer {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Include Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Header -->
+    <header class="hero-gradient text-white py-16">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Briefing Clínica Florê</h1>
+            <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">
+                Conceitos, Propósito e Estratégia de Marketing Digital
+            </p>
+            <div class="mt-8 inline-flex items-center gap-2 bg-white bg-opacity-20 px-6 py-3 rounded-full">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span class="font-medium">Projeto em Desenvolvimento</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12">
+
+        <!-- Seção 1: Conceito e Propósito -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Identidade da Marca</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Conheça os pilares fundamentais que definem a essência da Clínica Florê
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Conceito -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Conceito</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        A Florê nasceu para ser mais do que uma clínica estética - queremos ser um 
+                        <strong class="text-[#84a98c]">refúgio de bem-estar e autocuidado</strong> para todos. 
+                        Um espaço onde o autocuidado aconteça de forma autêntica, sem pressões ou padrões impostos. 
+                        Acreditamos que estética também é <strong class="text-[#84a98c]">cuidar da mente e da alma</strong>.
+                    </p>
+                </div>
+
+                <!-- Propósito -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Propósito</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        Criar um <strong class="text-[#84a98c]">ambiente seguro e inclusivo</strong>, 
+                        onde todas as pessoas possam se reconectar com seu bem-estar e autoestima.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Missão -->
+            <div class="mt-8 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-2xl p-8 text-white">
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold mb-4">Nossa Missão</h3>
+                    <p class="text-lg mb-4 opacity-90">
+                        <strong>Ética, Respeito e Autenticidade.</strong>
+                    </p>
+                    <p class="text-xl font-medium">
+                        Transformar o autocuidado em um ato de libertação e reconexão com a autoestima, 
+                        realçando belezas reais.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Seção 2: Diferenciais -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nossos Diferenciais</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    O que torna a experiência Florê única e especial
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Processo em 4 Etapas -->
+                <div class="relative bg-white rounded-2xl p-8 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Experiência e Atendimento Florê</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Etapa 1 -->
+                        <div class="relative">
+                            <div class="step-counter mb-4">1</div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Consulta Inicial Gratuita</h4>
+                            <p class="text-gray-600">
+                                Avaliação personalizada da pele e definição dos cuidados ideais para cada cliente.
+                            </p>
+                        </div>
+
+                        <!-- Etapa 2 -->
+                        <div class="relative">
+                            <div class="step-counter mb-4">2</div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Plano Individualizado</h4>
+                            <p class="text-gray-600">
+                                Cronograma exclusivo desenvolvido especialmente para cada cliente e suas necessidades.
+                            </p>
+                        </div>
+
+                        <!-- Etapa 3 -->
+                        <div class="relative">
+                            <div class="step-counter mb-4">3</div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Acompanhamento Pós-Procedimento</h4>
+                            <p class="text-gray-600">
+                                Suporte via WhatsApp com atenção especial no período pós-procedimento.
+                            </p>
+                        </div>
+
+                        <!-- Etapa 4 -->
+                        <div class="relative">
+                            <div class="step-counter mb-4">4</div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Comunidade Florê</h4>
+                            <p class="text-gray-600">
+                                Acesso à comunidade exclusiva com conteúdos, dicas e apoio contínuo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ambiente Sensorial -->
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-8 h-8 text-[#84a98c] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a2 2 0 012-2h6a2 2 0 012 2v6a3 3 0 01-3 3z"></path>
+                        </svg>
+                        Ambiente Sensorial
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-[#84a98c] bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-8 h-8 text-[#84a98c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">Aromaterapia</h4>
+                            <p class="text-gray-600 text-sm">Cheiro exclusivo da Florê</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-[#84a98c] bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-8 h-8 text-[#84a98c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">Música Relaxante</h4>
+                            <p class="text-gray-600 text-sm">Playlist personalizada</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-[#84a98c] bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-8 h-8 text-[#84a98c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">Decoração</h4>
+                            <p class="text-gray-600 text-sm">Sofisticada e acolhedora</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mimos Especiais -->
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-8 h-8 text-[#84a98c] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+                        </svg>
+                        Mimos Especiais
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                            <p class="font-medium text-gray-800">☕ Chá & Café</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                            <p class="font-medium text-gray-800">🤲 Toalhinhas Aromatizadas</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                            <p class="font-medium text-gray-800">🎁 Argilas Especiais</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                            <p class="font-medium text-gray-800">💝 Kits de Autocuidado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Seção 3: Serviços da Clínica -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nossos Serviços</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Conheça nossa gama completa de procedimentos estéticos avançados
+                </p>
+            </div>
+
+            <!-- Serviços em Foco -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">⭐ Serviços em Destaque</h3>
+                <p class="text-center text-gray-600 mb-8">Nosso foco principal para geração de leads</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Limpeza de Pele Profunda -->
+                    <div class="bg-gradient-to-br from-[#84a98c] to-[#52796f] rounded-2xl p-8 text-white shadow-xl card-hover">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">Limpeza de Pele Profunda</h4>
+                            <p class="text-white text-opacity-90">
+                                Oleosidade, comedões, espinhas, células mortas, pele áspera, falta de hidratação
+                            </p>
+                            <div class="mt-4 bg-white bg-opacity-20 rounded-lg px-4 py-2">
+                                <span class="text-sm font-medium">🎯 FOCO PRINCIPAL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Microagulhamento -->
+                    <div class="bg-gradient-to-br from-[#84a98c] to-[#52796f] rounded-2xl p-8 text-white shadow-xl card-hover">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">Microagulhamento</h4>
+                            <p class="text-white text-opacity-90">
+                                Estímulo de colágeno, clareamento, melhora de cicatrizes, melasma, estrias e calvície
+                            </p>
+                            <div class="mt-4 bg-white bg-opacity-20 rounded-lg px-4 py-2">
+                                <span class="text-sm font-medium">🎯 FOCO PRINCIPAL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preenchimento Labial -->
+                    <div class="bg-gradient-to-br from-[#84a98c] to-[#52796f] rounded-2xl p-8 text-white shadow-xl card-hover">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">Preenchimento Labial</h4>
+                            <p class="text-white text-opacity-90">
+                                Aumento e definição dos lábios para realçar a beleza natural e autoestima
+                            </p>
+                            <div class="mt-4 bg-white bg-opacity-20 rounded-lg px-4 py-2">
+                                <span class="text-sm font-medium">🎯 FOCO PRINCIPAL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfólio Completo de Serviços -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Portfólio Completo de Serviços</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Ultraformer -->
+                    <div class="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+                        <h4 class="font-bold text-gray-800 mb-2">Ultraformer</h4>
+                        <p class="text-gray-600 text-sm">Tecnologia avançada para uma pele mais jovem e saudável</p>
+                    </div>
+
+                    <!-- Bioestimulador -->
+                    <div class="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+                        <h4 class="font-bold text-gray-800 mb-2">Bioestimulador</h4>
+                        <p class="text-gray-600 text-sm">Tratamento facial com resultados naturais</p>
+                    </div>
+
+                    <!-- Jato de Plasma -->
+                    <div class="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+                        <h4 class="font-bold text-gray-800 mb-2">Jato de Plasma</h4>
+                        <p class="text-gray-600 text-sm">Acelerar o rejuvenescimento celular e estimular a formação de colágeno</p>
+                    </div>
+
+                    <!-- Toxina Botulínica -->
+                    <div class="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+                        <h4 class="font-bold text-gray-800 mb-2">Toxina Botulínica</h4>
+                        <p class="text-gray-600 text-sm">Redução de rugas e linhas de expressão</p>
+                    </div>
+
+                    <!-- Intradermoterapia -->
+                    <div class="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+                        <h4 class="font-bold text-gray-800 mb-2">Intradermoterapia</h4>
+                        <p class="text-gray-600 text-sm">Rejuvenesce e fortalece sua pele de dentro para fora</p>
+                    </div>
+
+                    <!-- Fios de PDO -->
+                    <div class="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+                        <h4 class="font-bold text-gray-800 mb-2">Fios de PDO</h4>
+                        <p class="text-gray-600 text-sm">Estímulo de colágeno, firmeza de pele, rejuvenescimento, aumento de espessura</p>
+                    </div>
+
+                    <!-- Lavieen -->
+                    <div class="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+                        <h4 class="font-bold text-gray-800 mb-2">Lavieen</h4>
+                        <p class="text-gray-600 text-sm">Melhorar a textura da pele, tratar manchas, rugas, cicatrizes e estimular a produção de colágeno</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600 italic">
+                        "Todos os nossos tratamentos são realizados por profissionais especializados, 
+                        garantindo segurança e resultados excepcionais."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Estratégia de Marketing Digital -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Estratégia de Marketing Digital</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Como vamos atrair e conquistar nosso público-alvo
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Objetivo Principal -->
+                <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800">Objetivo Principal</h4>
+                    </div>
+                    <p class="text-gray-700 mb-3">
+                        <strong class="text-[#84a98c]">Geração de Leads Qualificados</strong> para agendar consultas iniciais gratuitas.
+                    </p>
+                    <div class="bg-[#84a98c]/20 rounded-lg p-3">
+                        <p class="text-[#52796f] font-medium text-sm">
+                            Buscar um bom volume de clientes interessados em procedimentos estéticos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Público-Alvo -->
+                <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800">Público-Alvo</h4>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                            <span class="text-gray-700 text-sm"><strong>Idade:</strong> 25 a 45 anos</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                            <span class="text-gray-700 text-sm"><strong>Localização:</strong> Porto Alegre e região</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                            <span class="text-gray-700 text-sm"><strong>Interesse:</strong> Melhora da autoestima</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                            <span class="text-gray-700 text-sm"><strong>Foco:</strong> Estética avançada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8" style="padding-left: 1rem; padding-right: 1rem;">
+        <div class="text-center">
+            <p class="text-gray-300">&copy; 2025 Clínica Florê - Briefing e Estratégia de Marketing Digital</p>
+        </div>
+    </footer>
+
+    <script src="../../components/sidebar.js"></script>
+    <script>
+        // Inicializar sidebar
+        const sidebar = new SidebarComponent();
+        sidebar.render();
+    </script>
+
+</body>
+</html>

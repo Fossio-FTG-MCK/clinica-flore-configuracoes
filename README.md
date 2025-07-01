@@ -60,7 +60,7 @@ flore/
 - **Reutilizável**: Implementado em 6 páginas
 - **Acessibilidade** completa com foco e ARIA
 
-### 📊 Área do Cliente (`/pages/cliente/plano-acao.html`)
+### 📊 Área do Cliente (`/pages/area-do-cliente/area-do-cliente.html`)
 - **Definição de estratégia** interativa
 - **Seleção de posicionamento** de mercado:
   - 🎯 Volume (alcance máximo)

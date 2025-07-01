@@ -25,39 +25,9 @@
             font-family: 'Poppins', sans-serif;
             background-color: #fdfaf6;
             color: #374151;
-        }
-        
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .sidebar-closed {
-            transform: translateX(-100%);
-        }
-        
-        @media (min-width: 768px) {
-            .sidebar-closed {
-                transform: translateX(0);
-            }
-        }
-        
-        .content-shift {
-            transition: margin-left 0.3s ease-in-out;
-        }
-        
-        .menu-item {
-            transition: all 0.3s ease;
-        }
-        
-        .menu-item:hover {
-            background-color: rgba(132, 169, 140, 0.1);
-            padding-left: 1.5rem;
-        }
-        
-        .menu-item.active {
-            background-color: #84a98c;
-            color: white;
-            border-radius: 0.5rem;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
         
         .card-hover {
@@ -72,109 +42,218 @@
         .overlay {
             backdrop-filter: blur(4px);
         }
+        
+        [title] {
+            position: relative;
+        }
+        
+        [title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 8px;
+        }
+        
+        [title]:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.8);
+            margin-bottom: 2px;
+        }
+        
+        /* Layout principal - removido margin global, será específico por seção */
+        .main-content {
+            min-height: 100vh;
+        }
+        
+        /* Header fixo - alinhado com o sidebar */
+        .dashboard-header {
+            background: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .dashboard-header {
+                margin-left: 16rem; /* Tamanho exato do sidebar */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+        
+        /* Corpo principal - com espaçamento do sidebar + 40px */
+        .main-content main {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .main-content main {
+                margin-left: calc(16rem + 40px); /* Sidebar + 40px de gap */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        /* Grid de status cards */
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-top: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .status-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        /* Grid principal */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .main-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Cards base */
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Seção projeto */
+        .project-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .strategy-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Footer */
+        .dashboard-footer {
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 1.5rem;
+            padding: 1.5rem 1rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .dashboard-footer {
+                padding: 1.5rem;
+            }
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+        
+        /* Mobile padding ajuste - removido conflito, já gerenciado pelo sidebar.css */
     </style>
 </head>
 <body class="antialiased">
     
-    <!-- Overlay para mobile -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden overlay"></div>
-    
-    <!-- Sidebar -->
-    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white shadow-xl z-50 sidebar">
-        <div class="p-6 border-b">
-            <div class="flex items-center gap-3">
-                <img src="midias/512x512-BK.png" alt="Logo Clínica Florê" class="w-10 h-10">
-                <div>
-                    <h2 class="text-lg font-bold text-[#84a98c]">Clínica Florê</h2>
-                    <p class="text-sm text-gray-600">Sistema de Gestão</p>
-                </div>
-            </div>
-        </div>
-        
-        <nav class="p-4">
-            <ul class="space-y-2">
-                <li>
-                    <a href="#dashboard" class="menu-item active flex items-center gap-3 p-3 rounded-lg">
-                        <span class="text-lg">📊</span>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="pages/cliente/plano-acao.html" class="menu-item flex items-center gap-3 p-3 rounded-lg">
-                        <span class="text-lg">👤</span>
-                        <span>Área do Cliente</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="pages/admin/dashboard.html" class="menu-item flex items-center gap-3 p-3 rounded-lg">
-                        <span class="text-lg">⚙️</span>
-                        <span>Painel Admin</span>
-                    </a>
-                </li>
-                <li class="pt-4">
-                    <h3 class="text-sm font-semibold text-gray-500 mb-2 px-3">DOCUMENTAÇÃO</h3>
-                </li>
-                <li>
-                    <a href="pages/documentacao/google/configuracoes.html" class="menu-item flex items-center gap-3 p-3 rounded-lg">
-                        <span class="text-lg">🔍</span>
-                        <span>Google Ads & Analytics</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="pages/documentacao/facebook/configuracoes.html" class="menu-item flex items-center gap-3 p-3 rounded-lg">
-                        <span class="text-lg">📘</span>
-                        <span>Meta/Facebook Ads</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="pages/documentacao/google/ferramentas.html" class="menu-item flex items-center gap-3 p-3 rounded-lg">
-                        <span class="text-lg">🛠️</span>
-                        <span>Ferramentas & KPIs</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        
-        <!-- Info do Gestor -->
-        <div class="absolute bottom-0 left-0 right-0 p-4 border-t bg-gray-50">
-            <div class="text-sm">
-                <p class="font-semibold text-gray-700">Marcelo Fruck</p>
-                <p class="text-gray-500">Gestor de Tráfego</p>
-                <p class="text-gray-500">(51) 99305-3612</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Botão de menu mobile -->
-    <button id="menuBtn" class="fixed top-4 left-4 z-60 md:hidden bg-[#84a98c] text-white p-3 rounded-lg shadow-lg">
-        <span class="block w-5 h-0.5 bg-white mb-1"></span>
-        <span class="block w-5 h-0.5 bg-white mb-1"></span>
-        <span class="block w-5 h-0.5 bg-white"></span>
-    </button>
-    
     <!-- Main Content -->
-    <div id="mainContent" class="md:ml-64 min-h-screen content-shift">
+    <div class="main-content min-h-screen">
         
         <!-- Header -->
-        <header class="bg-white shadow-sm p-6">
-            <div class="flex items-center justify-between">
+        <header class="dashboard-header">
+            <div class="header-content">
                 <div>
-                    <h1 class="text-3xl font-bold text-[#84a98c]">Dashboard Principal</h1>
-                    <p class="text-gray-600 mt-1">Sistema de Gestão de Tráfego Pago</p>
+                    <h1 class="text-2xl font-bold text-[#84a98c]">Onboarding</h1>
+                    <p class="text-sm text-gray-600">Sistema de Gestão de Tráfego Pago</p>
                 </div>
                 <div class="text-right">
-                    <p class="text-sm text-gray-500">Última atualização</p>
-                    <p class="font-semibold" id="lastUpdate"></p>
+                    <p class="text-xs text-gray-500">Última atualização</p>
+                    <p class="text-sm font-semibold" id="lastUpdate"></p>
                 </div>
             </div>
         </header>
         
         <!-- Dashboard Content -->
-        <main class="p-6">
-            
+        <main>
             <!-- Cartões de Status -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+            <div class="status-grid">
+                <div class="card card-hover">
                     <div class="flex items-center gap-4">
                         <div class="bg-green-100 p-3 rounded-full">
                             <span class="text-2xl">✅</span>
@@ -186,7 +265,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                <div class="card card-hover">
                     <div class="flex items-center gap-4">
                         <div class="bg-blue-100 p-3 rounded-full">
                             <span class="text-2xl">💾</span>
@@ -198,7 +277,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                <div class="card card-hover">
                     <div class="flex items-center gap-4">
                         <div class="bg-purple-100 p-3 rounded-full">
                             <span class="text-2xl">📱</span>
@@ -210,7 +289,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                <div class="card card-hover">
                     <div class="flex items-center gap-4">
                         <div class="bg-yellow-100 p-3 rounded-full">
                             <span class="text-2xl">🚀</span>
@@ -224,39 +303,55 @@
             </div>
             
             <!-- Seção Principal -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                
+            <div class="main-grid">
                 <!-- Acesso Rápido -->
-                <div class="bg-white p-8 rounded-xl shadow-sm">
+                <div class="card">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Acesso Rápido</h2>
                     <div class="space-y-4">
-                        <a href="pages/cliente/plano-acao.html" class="block p-4 bg-[#84a98c]/10 rounded-lg hover:bg-[#84a98c]/20 transition">
+                        <a href="pages/briefing/" class="block p-4 bg-[#84a98c]/10 rounded-lg hover:bg-[#84a98c]/20 transition">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl">💡</span>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800">Briefing Clínica Florê</h3>
+                                    <p class="text-sm text-gray-600">Conceitos, missão e estratégia da marca</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="pages/area-do-cliente/" class="block p-4 bg-[#84a98c]/10 rounded-lg hover:bg-[#84a98c]/20 transition">
                             <div class="flex items-center gap-4">
                                 <span class="text-2xl">📋</span>
                                 <div>
-                                    <h3 class="font-semibold text-gray-800">Plano de Ação - Cliente</h3>
+                                    <h3 class="font-semibold text-gray-800">Área do Cliente</h3>
                                     <p class="text-sm text-gray-600">Formulário interativo para Mônica</p>
                                 </div>
                             </div>
                         </a>
                         
-                        <a href="pages/admin/dashboard.html" class="block p-4 bg-[#84a98c]/10 rounded-lg hover:bg-[#84a98c]/20 transition">
-                            <div class="flex items-center gap-4">
-                                <span class="text-2xl">📊</span>
+                        <div class="block p-4 bg-gray-100 rounded-lg cursor-not-allowed relative" title="Acesso restrito ao gestor de tráfego">
+                            <div class="flex items-center gap-4 opacity-60">
+                                <div class="relative">
+                                    <span class="text-2xl">📊</span>
+                                    <div class="absolute -top-1 -right-1 bg-gray-600 rounded-full p-1">
+                                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
                                 <div>
                                     <h3 class="font-semibold text-gray-800">Dashboard Administrativo</h3>
-                                    <p class="text-sm text-gray-600">Visualizar todos os planos salvos</p>
+                                    <p class="text-sm text-gray-600">Acesso exclusivo do gestor</p>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Documentação -->
-                <div class="bg-white p-8 rounded-xl shadow-sm">
+                <div class="card">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Documentação Técnica</h2>
                     <div class="space-y-4">
-                        <a href="pages/documentacao/google/configuracoes.html" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                        <a href="pages/documentacao/google/" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
                             <div class="flex items-center gap-4">
                                 <span class="text-2xl">🔍</span>
                                 <div>
@@ -266,7 +361,7 @@
                             </div>
                         </a>
                         
-                        <a href="pages/documentacao/facebook/configuracoes.html" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                        <a href="pages/documentacao/facebook/" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
                             <div class="flex items-center gap-4">
                                 <span class="text-2xl">📘</span>
                                 <div>
@@ -276,7 +371,7 @@
                             </div>
                         </a>
                         
-                        <a href="pages/documentacao/google/ferramentas.html" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                        <a href="pages/ferramentas/" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
                             <div class="flex items-center gap-4">
                                 <span class="text-2xl">🛠️</span>
                                 <div>
@@ -290,9 +385,9 @@
             </div>
             
             <!-- Informações do Projeto -->
-            <div class="mt-8 bg-white p-8 rounded-xl shadow-sm">
+            <div class="project-section">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Sobre o Projeto</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="project-grid">
                     <div>
                         <h3 class="font-semibold text-[#84a98c] mb-3">Cliente</h3>
                         <p class="text-gray-600 mb-4">Clínica Florê - Saúde, Estética e Bem-estar</p>
@@ -304,72 +399,95 @@
                         <p class="text-sm text-gray-500">Integração com Supabase para armazenamento seguro de dados.</p>
                     </div>
                 </div>
+
+                <!-- Estratégia de Marketing Digital -->
+                <div class="border-t border-gray-200 pt-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">Estratégia de Marketing Digital</h3>
+                    <p class="text-center text-gray-600 mb-8">Como vamos atrair e conquistar nosso público-alvo</p>
+                    
+                    <div class="strategy-grid">
+                        <!-- Objetivo Principal -->
+                        <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-gray-800">Objetivo Principal</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                <strong class="text-[#84a98c]">Geração de Leads Qualificados</strong> para agendar consultas iniciais gratuitas.
+                            </p>
+                            <div class="bg-[#84a98c]/20 rounded-lg p-3">
+                                <p class="text-[#52796f] font-medium text-sm">
+                                    Buscar um bom volume de clientes interessados em procedimentos estéticos.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Público-Alvo -->
+                        <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-gray-800">Público-Alvo</h4>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                    <span class="text-gray-700 text-sm"><strong>Idade:</strong> 25 a 45 anos</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                    <span class="text-gray-700 text-sm"><strong>Localização:</strong> Porto Alegre e região</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                    <span class="text-gray-700 text-sm"><strong>Interesse:</strong> Melhora da autoestima</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                    <span class="text-gray-700 text-sm"><strong>Foco:</strong> Estética avançada</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <div class="footer-content">
+                    <div>
+                        <p class="text-gray-600">Sistema desenvolvido para <strong>Clínica Florê</strong></p>
+                        <p class="text-sm text-gray-500">Gestão de Tráfego Pago - Versão 2.0</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <img src="midias/512x512-WT.png" alt="Logo" class="w-8 h-8">
+                        <span class="text-sm text-gray-500">Powered by Supabase</span>
+                    </div>
+                </div>
+            </footer>
         </main>
-        
-        <!-- Footer -->
-        <footer class="bg-white border-t p-6 mt-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div>
-                    <p class="text-gray-600">Sistema desenvolvido para <strong>Clínica Florê</strong></p>
-                    <p class="text-sm text-gray-500">Gestão de Tráfego Pago - Versão 2.0</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <img src="midias/512x512-WT.png" alt="Logo" class="w-8 h-8">
-                    <span class="text-sm text-gray-500">Powered by Supabase</span>
-                </div>
-            </div>
-        </footer>
         
     </div>
     
     <script>
-        // Controle do menu lateral
-        const menuBtn = document.getElementById('menuBtn');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const mainContent = document.getElementById('mainContent');
-        
-        function toggleSidebar() {
-            sidebar.classList.toggle('sidebar-closed');
-            overlay.classList.toggle('hidden');
-        }
-        
-        menuBtn.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-        
         // Atualizar timestamp
         document.getElementById('lastUpdate').textContent = new Date().toLocaleString('pt-BR');
-        
-        // Ativar menu item baseado na página atual
-        const menuItems = document.querySelectorAll('.menu-item');
-        menuItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Remover active de todos
-                menuItems.forEach(mi => mi.classList.remove('active'));
-                // Adicionar active no clicado
-                this.classList.add('active');
-            });
-        });
-        
-        // Fechar sidebar no desktop quando clicar em um link
-        if (window.innerWidth >= 768) {
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    if (window.innerWidth < 768) {
-                        toggleSidebar();
-                    }
-                });
-            });
-        }
     </script>
     
     <!-- Sidebar Component -->
     <script src="components/sidebar.js"></script>
     <script>
         // Inicializa o sidebar
-        new SidebarComponent();
+        document.addEventListener('DOMContentLoaded', function() {
+            new SidebarComponent();
+        });
     </script>
     
 </body>

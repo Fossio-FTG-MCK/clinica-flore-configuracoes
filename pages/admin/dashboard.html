@@ -4,150 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Planos de Ação</title>
+    <link rel="stylesheet" href="../../components/sidebar.css">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f4f7f9;
             color: #333;
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
         }
-        header {
+        
+        .admin-header {
             background-color: #0d1721;
             color: white;
-            padding: 1rem 2rem;
-            font-size: 1.5rem;
+            padding: 16px 20px;
+            font-size: 24px;
             font-weight: 600;
         }
-        main {
+        
+        .admin-main {
             display: flex;
-            flex: 1;
-            overflow: hidden;
+            min-height: calc(100vh - 70px);
         }
+        
         #lista-container {
             flex: 0 0 350px;
             border-right: 1px solid #e0e0e0;
             overflow-y: auto;
             background-color: #fff;
         }
+        
         #lista-clientes {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+        
         #lista-clientes li {
-            padding: 1rem 1.5rem;
+            padding: 16px;
             cursor: pointer;
             border-bottom: 1px solid #f0f0f0;
-            font-size: 1.1rem;
+            font-size: 18px;
             transition: background-color 0.2s;
         }
+        
         #lista-clientes li:hover {
             background-color: #eef2f5;
         }
-         #lista-clientes li.active {
-            background-color: #2a7a51;
+        
+        #lista-clientes li.active {
+            background-color: #84a98c;
             color: white;
             font-weight: 600;
         }
+        
         #detalhes-container {
             flex: 1;
-            padding: 2rem 3rem;
+            padding: 20px;
             overflow-y: auto;
         }
+        
         #placeholder {
-            font-size: 1.5rem;
+            font-size: 24px;
             color: #888;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            height: 50vh;
         }
+        
         .info-grupo {
-            margin-bottom: 2rem;
+            margin-bottom: 32px;
             border-bottom: 1px solid #eee;
-            padding-bottom: 1.5rem;
+            padding-bottom: 24px;
         }
+        
         .info-grupo h2 {
-            font-size: 1.5rem;
-            color: #2a7a51;
+            font-size: 24px;
+            color: #84a98c;
             margin-top: 0;
         }
+        
         .info-item {
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
+            font-size: 18px;
+            margin-bottom: 12px;
         }
+        
         .info-item strong {
             display: inline-block;
             width: 200px;
             color: #555;
         }
+        
         .info-item span {
             color: #111;
         }
+        
         .checklist {
             list-style: none;
             padding-left: 0;
         }
+        
         .checklist li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        Dashboard de Clientes
-    </header>
-
-    <main>
-        <div id="lista-container">
-            <ul id="lista-clientes">
-                </ul>
-        </div>
-        <div id="detalhes-container">
-            <div id="placeholder">Selecione um cliente para ver os detalhes</div>
-            <div id="detalhes-view" style="display:none;">
-
-                <div class="info-grupo">
-                    <h2 id="detalhe-nome-clinica"></h2>
-                    <div class="info-item"><strong>Contato Principal:</strong> <span id="detalhe-nome-contato"></span></div>
-                    <div class="info-item"><strong>Gestor Responsável:</strong> <span id="detalhe-gestor-nome"></span></div>
-                    <div class="info-item"><strong>Contato do Gestor:</strong> <span id="detalhe-gestor-contato"></span></div>
-                </div>
-
-                <div class="info-grupo">
-                    <h2>Estratégia Digital</h2>
-                    <div class="info-item"><strong>Posicionamento:</strong> <span id="detalhe-posicionamento"></span></div>
-                    <div class="info-item"><strong>Diferencial:</strong> <span id="detalhe-diferencial"></span></div>
-                    <div class="info-item"><strong>Serviços em Foco:</strong> <span id="detalhe-servicos"></span></div>
-                </div>
-                
-                <div class="info-grupo">
-                    <h2>Plano de Investimento Mensal</h2>
-                    <div class="info-item"><strong>Gestão de Tráfego:</strong> <span id="detalhe-investimento-gestao"></span></div>
-                    <div class="info-item"><strong>Anúncios (Google/Meta):</strong> <span id="detalhe-investimento-anuncios"></span></div>
-                </div>
-
-                <div class="info-grupo">
-                    <h2>Checklist de Acessos e Criativos</h2>
-                    <ul id="detalhe-checklist" class="checklist"></ul>
-                </div>
-
-            </div>
-        </div>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <!-- Sidebar Component -->
     <script src="../../components/sidebar.js"></script>
     <script>
         // Inicializa o sidebar
-        new SidebarComponent();
+        document.addEventListener('DOMContentLoaded', function() {
+            new SidebarComponent();
+        });
     </script>
+
+    <!-- Main Content usando a classe correta do sidebar -->
+    <div class="lg:ml-64">
+        <header class="admin-header">
+            Dashboard de Clientes
+        </header>
+
+        <main class="admin-main">
+            <div id="lista-container">
+                <ul id="lista-clientes">
+                </ul>
+            </div>
+            
+            <div id="detalhes-container">
+                <div id="placeholder">Selecione um cliente para ver os detalhes</div>
+                <div id="detalhes-view" style="display:none;">
+                    <div class="info-grupo">
+                        <h2 id="detalhe-nome-clinica"></h2>
+                        <div class="info-item"><strong>Contato Principal:</strong> <span id="detalhe-nome-contato"></span></div>
+                        <div class="info-item"><strong>Gestor Responsável:</strong> <span id="detalhe-gestor-nome"></span></div>
+                        <div class="info-item"><strong>Contato do Gestor:</strong> <span id="detalhe-gestor-contato"></span></div>
+                    </div>
+
+                    <div class="info-grupo">
+                        <h2>Estratégia Digital</h2>
+                        <div class="info-item"><strong>Posicionamento:</strong> <span id="detalhe-posicionamento"></span></div>
+                        <div class="info-item"><strong>Diferencial:</strong> <span id="detalhe-diferencial"></span></div>
+                        <div class="info-item"><strong>Serviços em Foco:</strong> <span id="detalhe-servicos"></span></div>
+                    </div>
+                    
+                    <div class="info-grupo">
+                        <h2>Plano de Investimento Mensal</h2>
+                        <div class="info-item"><strong>Gestão de Tráfego:</strong> <span id="detalhe-investimento-gestao"></span></div>
+                        <div class="info-item"><strong>Anúncios (Google/Meta):</strong> <span id="detalhe-investimento-anuncios"></span></div>
+                    </div>
+
+                    <div class="info-grupo">
+                        <h2>Checklist de Acessos e Criativos</h2>
+                        <ul id="detalhe-checklist" class="checklist"></ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
         // -------------------------------------------------------------------

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Cliente | Clínica Florê</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../midias/512x512-BK.png">
+    <link rel="apple-touch-icon" href="../../midias/512x512-BK.png">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Área do Cliente - Plano interativo para Clínica Florê">
+    <meta name="keywords" content="clínica, estética, tráfego pago, harmonização facial, botox">
+    <meta name="author" content="Marcelo Fruck - Gestor de Tráfego">
+    
+    <!-- Stylesheets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <!-- Configuração GitHub -->
+    <script src="../../config-github.js"></script>
+    
+    <!-- 🔧 CONFIGURAÇÃO EMBUTIDA - ACESSO EXCLUSIVO CLIENTE -->
+    <script>
+        // ✅ Configuração específica para Clínica Florê - Acesso Direto do Cliente
+        window.AppConfig = {
+            CONFIG: {
+                APP_NAME: 'Clínica Florê - Formulário Exclusivo',
+                VERSION: '1.0.0',
+                
+                CLIENT: {
+                    CLINIC_NAME: 'Clínica Florê',
+                    CONTACT_NAME: 'Mônica',
+                    MANAGER_NAME: 'Marcelo Fruck',
+                    MANAGER_CONTACT: '(51) 99305-3612'
+                }
+            },
+            
+            // Função para obter configuração do Supabase
+            getSupabaseConfig: function() {
+                return {
+                    url: window.CONFIG?.SUPABASE?.URL || 'https://vrvxzcnlpugupwjzbjcq.supabase.co',
+                    key: window.CONFIG?.SUPABASE?.ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZydnh6Y25scHVndXB3anpiamNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5NjkxOTEsImV4cCI6MjA2NjU0NTE5MX0.0KxrWMKD7fupTzZ2muNRKgdrswcNJxJz7CHLMBMPPh4'
+                };
+            }
+        };
+        
+        console.log('🌟 Clínica Florê - Acesso exclusivo configurado para cliente');
+    </script>
+    
+
+    <!-- Chosen Palette: Warm Neutral (Background: #fdfaf6), Dark Gray Text (#374151), Sage Green Accent (#84a98c), Tan Accent (#cad2c5) -->
+    <!-- Application Structure Plan: A single-page, interactive onboarding guide for the client, Mônica. Structure is thematic: 1. Partnership Intro, 2. Interactive Strategy Definition (service focus with text area, positioning choice, detailed audience questions with options, audience mapping by me, inspiration accounts), 3. Visual Investment Breakdown (chart), 4. Actionable Checklist (creatives & access fields with username/email and password inputs), 5. Contact. This structure transforms a static proposal into a guided, engaging experience, making it easier for the client to understand her role and provide the necessary information, which is more user-friendly than a dense text document, while also collecting crucial data for Supabase integration. -->
+    <!-- Visualization & Content Choices: 
+    - Report Info: Market Positioning (Volume vs. Exclusivity) -> Goal: Clarify choice & implications -> Viz/Method: Two large, clickable HTML cards -> Interaction: Clicking a card highlights it and reveals context-specific text, providing instant feedback and reinforcing the choice. This is better than a simple radio button for emphasizing the two distinct paths.
+    - Report Info: Investment Breakdown (R$300 fee + R$300 ad spend) -> Goal: Clearly visualize the 50/50 split -> Viz/Method: Chart.js Doughnut Chart -> Interaction: Hover tooltips provide exact values. A chart is more impactful and easier to grasp than plain text for financial data.
+    - Report Info: List of required assets/access (now with input fields for username/email and password) -> Goal: Create an actionable to-do list and data collection point -> Viz/Method: HTML checklist with input fields and a dynamic progress bar -> Interaction: Clicking checkboxes updates the progress bar, gamifying the onboarding process and giving the client a sense of accomplishment and clarity on what's pending. Input fields facilitate direct data entry for access credentials, including passwords with security advisories.
+    - Report Info: Service focus (now user-entered) -> Goal: Direct input from client -> Viz/Method: Textarea.
+    - Report Info: Public-target questions (now selectable options) -> Goal: Guided input on audience perception -> Viz/Method: Radio buttons/checkboxes for demographics and psychographics.
+    - Report Info: Inspiration accounts -> Goal: Gather creative and strategic benchmarks -> Viz/Method: Text input fields.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdfaf6;
+            color: #374151;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .position-card {
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .position-card.selected {
+            border-color: #84a98c;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .checklist-item input[type="checkbox"]:checked + label .checkbox-icon {
+            background-color: #84a98c;
+            border-color: #84a98c;
+        }
+        .checklist-item input[type="checkbox"]:checked + label .checkbox-icon:after {
+            opacity: 1;
+        }
+        .checkbox-icon {
+            transition: all 0.2s;
+        }
+        .checkbox-icon:after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .radio-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+        
+        /* Botão de salvar flutuante */
+        .floating-save-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 50;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(132, 169, 140, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(132, 169, 140, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(132, 169, 140, 0); }
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #84a98c;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Layout responsivo para sidebar */
+        .main-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .main-container {
+                margin-left: calc(16rem + 40px); /* Sidebar + 40px de gap */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Sidebar Component -->
+    <script src="../../components/sidebar.js"></script>
+    <script>
+        // Inicializa o sidebar
+        document.addEventListener('DOMContentLoaded', function() {
+            new SidebarComponent();
+        });
+    </script>
+
+    <div class="main-container max-w-5xl mx-auto py-4 sm:py-8">
+
+        <header class="text-center my-8 md:my-12">
+                            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#84a98c]">Área do Cliente</h1>
+            <p class="mt-2 text-lg sm:text-xl text-gray-600">Clínica Florê | Área do Cliente</p>
+            <div class="mt-4 inline-flex items-center px-4 py-2 bg-blue-50 rounded-full">
+                <span class="text-sm text-blue-700">👤 Acesso exclusivo para Mônica</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- SEÇÃO 1: INFORMAÇÕES DA CLÍNICA -->
+            <section id="info-clinica" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm mb-12 border border-[#84a98c] border-opacity-20">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">📋 Informações da Clínica</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome da Clínica</label>
+                        <input type="text" id="nome-clinica" class="input-field" placeholder="Ex: Clínica Florê" value="Clínica Florê">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Contato Principal</label>
+                        <input type="text" id="nome-contato" class="input-field" placeholder="Ex: Mônica" value="Mônica">
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SEÇÃO 2: DEFININDO A ESTRATÉGIA -->
+            <section id="estrategia" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm mb-12 border border-[#84a98c] border-opacity-20">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">1. Definição da Estratégia</h2>
+                <p class="text-gray-600 mb-8">Sua visão é o ponto de partida. Vamos definir o foco e o posicionamento da sua clínica para criarmos anúncios que se conectem com o público certo.</p>
+
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-3">Serviços Foco</h3>
+                        <p class="text-gray-600 mb-4">Por favor, liste os 3 a 5 procedimentos ou serviços que você mais quer destacar e vender agora na Clínica Florê, um por linha. Você também pode incluir novidades ou promoções especiais.</p>
+                        <textarea id="service-focus" rows="5" class="input-field" placeholder="Ex:&#10;Harmonização Facial&#10;Preenchimento Labial&#10;Botox&#10;Limpeza de Pele Profunda"></textarea>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-3">Diferencial da Clínica</h3>
+                        <p class="text-gray-600 mb-4">Descreva o que torna a Clínica Florê única. O que diferencia vocês da concorrência?</p>
+                        <textarea id="clinic-differential" rows="3" class="input-field diferencial-input" placeholder="Ex: Atendimento personalizado, tecnologia de ponta, ambiente acolhedor..."></textarea>
+                        <div class="text-right text-sm text-gray-500 mt-1">
+                            <span id="char-count">0</span>/500 caracteres
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Posicionamento de Mercado: Volume vs. Exclusividade</h3>
+                        <p class="text-gray-600 mb-6">Esta é uma decisão crucial. Selecione a opção que melhor representa a sua visão para a Clínica Florê. Sua escolha definirá o tom e o público das nossas campanhas.</p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div id="card-volume" class="position-card cursor-pointer bg-stone-50 p-6 rounded-xl border-2 border-stone-200">
+                                <h4 class="font-bold text-lg text-gray-800">🎯 Foco em Volume</h4>
+                                <p class="text-gray-600 mt-2">Atrair um público mais amplo com preços competitivos, visando um maior número de agendamentos e popularidade.</p>
+                            </div>
+                            <div id="card-exclusividade" class="position-card cursor-pointer bg-stone-50 p-6 rounded-xl border-2 border-stone-200">
+                                <h4 class="font-bold text-lg text-gray-800">💎 Foco em Exclusividade</h4>
+                                <p class="text-gray-600 mt-2">Atrair um público seleto com tratamentos premium e personalizados, focando em um ticket médio mais elevado.</p>
+                            </div>
+                        </div>
+                         <div id="posicionamento-feedback" class="mt-6 p-4 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 hidden"></div>
+                    </div>
+
+
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-3">Público-Alvo Ideal (Sua Visão)</h3>
+                        <p class="text-gray-600 leading-relaxed mb-4">Para quem você imagina que são seus melhores clientes? Por favor, selecione as opções que melhor representam o público que você deseja atrair. Sua percepção é fundamental e será combinada com minha análise de dados.</p>
+                        
+                        <div class="mb-4">
+                            <p class="font-medium text-gray-700 mb-2">Qual a faixa etária principal?</p>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-gray-600">
+                                <label class="radio-option"><input type="radio" name="age-group" value="20-30"> 20-30 anos</label>
+                                <label class="radio-option"><input type="radio" name="age-group" value="30-40"> 30-40 anos</label>
+                                <label class="radio-option"><input type="radio" name="age-group" value="40-50"> 40-50 anos</label>
+                                <label class="radio-option"><input type="radio" name="age-group" value="50+"> 50+ anos</label>
+                                <label class="radio-option"><input type="radio" name="age-group" value="all-adults"> Todas as idades adultas</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="font-medium text-gray-700 mb-2">Qual o gênero predominante?</p>
+                            <div class="grid grid-cols-2 gap-2 text-gray-600">
+                                <label class="radio-option"><input type="radio" name="gender" value="female"> Feminino</label>
+                                <label class="radio-option"><input type="radio" name="gender" value="male"> Masculino</label>
+                                <label class="radio-option"><input type="radio" name="gender" value="both"> Ambos</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="font-medium text-gray-700 mb-2">Quais os principais interesses do seu público?</p>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-gray-600">
+                                <label class="radio-option"><input type="checkbox" name="interests" value="beauty"> Beleza e Estética</label>
+                                <label class="radio-option"><input type="checkbox" name="interests" value="wellness"> Bem-estar e Saúde</label>
+                                <label class="radio-option"><input type="checkbox" name="interests" value="fashion"> Moda e Estilo de Vida</label>
+                                <label class="radio-option"><input type="checkbox" name="interests" value="self-care"> Autocuidado</label>
+                                <label class="radio-option"><input type="checkbox" name="interests" value="anti-aging"> Antienvelhecimento</label>
+                                <label class="radio-option"><input type="checkbox" name="interests" value="personal-development"> Desenvolvimento Pessoal</label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-medium text-gray-700 mb-2">Qual a principal motivação do seu público ao buscar estética?</p>
+                            <div class="grid grid-cols-1 gap-2 text-gray-600">
+                                <label class="radio-option"><input type="radio" name="motivation" value="self-esteem"> Aumentar a autoestima e confiança</label>
+                                <label class="radio-option"><input type="radio" name="motivation" value="rejuvenation"> Rejuvenescimento e melhora da aparência</label>
+                                <label class="radio-option"><input type="radio" name="motivation" value="correction"> Correção de imperfeições</label>
+                                <label class="radio-option"><input type="radio" name="motivation" value="event-prep"> Preparação para eventos especiais</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-3">Mapeamento e Análise do Público-Alvo (Meu Trabalho)</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Além da sua valiosa visão sobre o público-alvo ideal, eu realizarei um **mapeamento aprofundado e uma análise estratégica** para refinar nossa segmentação. Isso inclui pesquisa de mercado, análise de dados demográficos, psicográficos e de comportamento online, bem como o estudo dos seus concorrentes. Meu objetivo é identificar as oportunidades mais lucrativas e garantir que seus anúncios alcancem as pessoas com maior probabilidade de se tornarem clientes fiéis da Clínica Florê.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-3">Inspirações e Benchmarking</h3>
+                        <p class="text-gray-600 mb-4">Para direcionarmos a criação dos criativos e a estratégia visual, por favor, compartilhe 3 contas (perfis do Instagram, clínicas ou profissionais da estética) que você admira e que sirvam de inspiração para o seu trabalho, dividindo-as por porte. Isso nos ajudará a entender melhor suas preferências estéticas e de comunicação.</p>
+                        <div>
+                            <label for="inspiration-small" class="block text-gray-700 text-sm font-bold mb-2">Conta Pequena (com até 5k seguidores):</label>
+                            <input type="text" id="inspiration-small" placeholder="Nome da Conta ou Link do Perfil" class="input-field">
+                        </div>
+                        <div>
+                            <label for="inspiration-medium" class="block text-gray-700 text-sm font-bold mb-2">Conta Média (entre 5k e 50k seguidores):</label>
+                            <input type="text" id="inspiration-medium" placeholder="Nome da Conta ou Link do Perfil" class="input-field">
+                        </div>
+                        <div>
+                            <label for="inspiration-large" class="block text-gray-700 text-sm font-bold mb-2">Conta Grande (mais de 50k seguidores):</label>
+                            <input type="text" id="inspiration-large" placeholder="Nome da Conta ou Link do Perfil" class="input-field">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 3: PLANO DE INVESTIMENTO -->
+            <section id="investimento" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">2. Plano de Investimento</h2>
+                 <p class="text-gray-600 mb-8">Transparência é fundamental. Aqui está o detalhamento do nosso investimento inicial mensal.</p>
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-full md:w-1/2">
+                        <div class="chart-container">
+                            <canvas id="investmentChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <p class="flex items-center font-semibold text-gray-700"><span class="w-4 h-4 rounded-full bg-[#84a98c] mr-3"></span> Meus Serviços (Gestão de Tráfego)</p>
+                            <p class="text-2xl font-bold text-gray-800 ml-7">R$ 300,00</p>
+                            <p class="text-sm text-gray-500 ml-7">(Condição Especial)</p>
+                        </div>
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <p class="flex items-center font-semibold text-gray-700"><span class="w-4 h-4 rounded-full bg-[#cad2c5] mr-3"></span> Anúncios (Google & Meta)</p>
+                            <p class="text-2xl font-bold text-gray-800 ml-7">R$ 300,00</p>
+                            <p class="text-sm text-gray-500 ml-7">(Investimento sugerido)</p>
+                        </div>
+                        <div class="p-4 bg-stone-100 rounded-lg border-t-2 border-[#84a98c]">
+                            <p class="font-semibold text-gray-700">Total do Investimento Inicial</p>
+                            <p class="text-3xl font-bold text-[#84a98c]">R$ 600,00 / mês</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 4: CHECKLIST DE PRÓXIMOS PASSOS -->
+            <section id="checklist" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm mb-12">
+                 <h2 class="text-2xl font-bold text-gray-800 mb-2">3. Checklist de Próximos Passos</h2>
+                 <p class="text-gray-600 mb-6">Para começarmos, preciso da sua ajuda com os itens abaixo. Conforme você os conclui, nossa estratégia ganha vida!</p>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-base font-medium text-[#84a98c]">Progresso</span>
+                        <span id="progress-text" class="text-sm font-medium text-[#84a98c]">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="progress-bar" class="bg-[#84a98c] h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">✓ Produção de Criativos</h3>
+                        <div class="space-y-3">
+                            <div class="checklist-item flex items-start"><input type="checkbox" id="c1" class="hidden"><label for="c1" class="flex items-center cursor-pointer"><span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Fotos profissionais do ambiente</label></div>
+                            <div class="checklist-item flex items-start"><input type="checkbox" id="c2" class="hidden"><label for="c2" class="flex items-center cursor-pointer"><span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Fotos suas e da equipe</label></div>
+                            <div class="checklist-item flex items-start"><input type="checkbox" id="c3" class="hidden"><label for="c3" class="flex items-center cursor-pointer"><span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Fotos de "Antes e Depois" (com autorização)</label></div>
+                            <div class="checklist-item flex items-start"><input type="checkbox" id="c4" class="hidden"><label for="c4" class="flex items-center cursor-pointer"><span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Vídeos curtos da clínica ou procedimentos</label></div>
+                            <div class="checklist-item flex items-start"><input type="checkbox" id="c5" class="hidden"><label for="c5" class="flex items-center cursor-pointer"><span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Logotipo em alta resolução</label></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">✓ Acessos Essenciais e Contatos</h3>
+                        <p class="text-sm text-red-600 mb-4 font-semibold">
+                            ⚠️ ATENÇÃO: Ao preencher os campos de senha diretamente aqui, tenha ciência da sua segurança. Se preferir, podemos combinar outra forma segura de compartilhar essas informações em nossa próxima reunião.
+                        </p>
+                        <p class="text-sm text-gray-600 mb-4">Por favor, preencha os campos abaixo com as informações de acesso necessárias.</p>
+                         <div class="space-y-3">
+                            <div class="checklist-item">
+                                <input type="checkbox" id="c6" class="hidden">
+                                <label for="c6" class="flex items-center cursor-pointer">
+                                    <span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Gerenciador de Negócios da Meta (Facebook Business Manager)
+                                </label>
+                                <input type="text" id="access-meta-business-user" placeholder="E-mail ou ID de Acesso" class="input-field">
+                                <input type="password" id="access-meta-business-pass" placeholder="Senha" class="input-field">
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="c7" class="hidden">
+                                <label for="c7" class="flex items-center cursor-pointer">
+                                    <span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Página do Facebook da Clínica
+                                </label>
+                                <input type="text" id="access-facebook-page-user" placeholder="E-mail ou Nome de Usuário" class="input-field">
+                                <input type="password" id="access-facebook-page-pass" placeholder="Senha" class="input-field">
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="c8" class="hidden">
+                                <label for="c8" class="flex items-center cursor-pointer">
+                                    <span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Perfil do Instagram da Clínica
+                                </label>
+                                <input type="text" id="access-instagram-profile-user" placeholder="Nome de Usuário ou E-mail" class="input-field">
+                                <input type="password" id="access-instagram-profile-pass" placeholder="Senha" class="input-field">
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="c9" class="hidden">
+                                <label for="c9" class="flex items-center cursor-pointer">
+                                    <span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Conta do Google Ads
+                                </label>
+                                <input type="text" id="access-google-ads-user" placeholder="E-mail de Acesso ou ID da Conta" class="input-field">
+                                <input type="password" id="access-google-ads-pass" placeholder="Senha" class="input-field">
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="c10" class="hidden">
+                                <label for="c10" class="flex items-center cursor-pointer">
+                                    <span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>Perfil da Empresa no Google (Google Meu Negócio)
+                                </label>
+                                <input type="text" id="access-google-my-business-user" placeholder="E-mail de Acesso" class="input-field">
+                                <input type="password" id="access-google-my-business-pass" placeholder="Senha" class="input-field">
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="c11" class="hidden">
+                                <label for="c11" class="flex items-center cursor-pointer">
+                                    <span class="checkbox-icon w-5 h-5 mr-3 border-2 border-gray-300 rounded relative"></span>WhatsApp para contato direto dos anúncios
+                                </label>
+                                <input type="text" id="contact-whatsapp" placeholder="Ex: (XX) XXXXX-XXXX" class="input-field">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estratégia de Marketing Digital -->
+            <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm mb-12">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">Estratégia de Marketing Digital</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Como vamos atrair e conquistar nosso público-alvo
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Objetivo Principal -->
+                    <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800">Objetivo Principal</h4>
+                        </div>
+                        <p class="text-gray-700 mb-3">
+                            <strong class="text-[#84a98c]">Geração de Leads Qualificados</strong> para agendar consultas iniciais gratuitas.
+                        </p>
+                        <div class="bg-[#84a98c]/20 rounded-lg p-3">
+                            <p class="text-[#52796f] font-medium text-sm">
+                                Buscar um bom volume de clientes interessados em procedimentos estéticos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Público-Alvo -->
+                    <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800">Público-Alvo</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Idade:</strong> 25 a 45 anos</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Localização:</strong> Porto Alegre e região</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Interesse:</strong> Melhora da autoestima</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Foco:</strong> Estética avançada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-12 py-8 border-t border-gray-200">
+            <div class="flex items-center justify-center mb-4">
+                <img src="../../midias/512x512-BK.png" alt="Logo Clínica Florê" class="w-12 h-12 mr-3">
+                <div>
+                    <p class="font-bold text-lg text-gray-800">Marcelo Fruck</p>
+                    <p class="text-gray-600">Gestor de Tráfego</p>
+                </div>
+            </div>
+            <p class="text-gray-600">
+                <a href="https://wa.me/5551993053612" target="_blank" class="text-[#84a98c] hover:underline">
+                    📱 WhatsApp: (51) 99305-3612
+                </a>
+            </p>
+            
+
+        </footer>
+
+    </div>
+
+    <!-- Botão de Salvar Flutuante -->
+    <button id="save-btn" class="floating-save-btn hidden bg-[#84a98c] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#6b7d71] transition-all duration-300 flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path>
+        </svg>
+        Salvar Dados
+    </button>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <div class="spinner mx-auto mb-4"></div>
+            <p class="text-gray-700 font-medium">Salvando dados...</p>
+            <p class="text-gray-500 text-sm mt-2">Por favor, aguarde</p>
+        </div>
+    </div>
+
+    <!-- Aplicação Principal Segura -->
+    <script src="../../app-secure.js"></script>
+    
+    <!-- Sidebar Component -->
+    <script src="../../components/sidebar.js"></script>
+    <script>
+        // Inicializa o sidebar
+        new SidebarComponent();
+    </script>
+    
+    <script>
+        // Contador de caracteres para diferencial
+        const diferencialInput = document.getElementById('clinic-differential');
+        const charCountElement = document.getElementById('char-count');
+        
+        if (diferencialInput && charCountElement) {
+            diferencialInput.addEventListener('input', function() {
+                const currentLength = this.value.length;
+                charCountElement.textContent = currentLength;
+                
+                // Mudar cor se próximo do limite
+                if (currentLength > 450) {
+                    charCountElement.style.color = '#ef4444'; // vermelho
+                } else if (currentLength > 400) {
+                    charCountElement.style.color = '#f59e0b'; // laranja
+                } else {
+                    charCountElement.style.color = '#6b7280'; // cinza padrão
+                }
+            });
+        }
+    </script>
+</body>
+</html>

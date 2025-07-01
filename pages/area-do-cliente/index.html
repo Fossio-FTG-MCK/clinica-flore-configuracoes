@@ -3,29 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plano de Ação Digital | Clínica Florê - Área do Cliente</title>
+    <title>Área do Cliente | Clínica Florê</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../../midias/512x512-BK.png">
     <link rel="apple-touch-icon" href="../../midias/512x512-BK.png">
     
     <!-- Meta Tags -->
-    <meta name="description" content="Plano de Ação Digital interativo para Clínica Florê - Área exclusiva do cliente">
+    <meta name="description" content="Área do Cliente - Plano interativo para Clínica Florê">
     <meta name="keywords" content="clínica, estética, tráfego pago, harmonização facial, botox">
     <meta name="author" content="Marcelo Fruck - Gestor de Tráfego">
     
-    <!-- Stylesheets -->
+    <!-- Stylesheets essenciais primeiro -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Supabase -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    
-    <!-- Configuração GitHub -->
-    <script src="../../config-github.js"></script>
     
     <!-- 🔧 CONFIGURAÇÃO EMBUTIDA - ACESSO EXCLUSIVO CLIENTE -->
     <script>
@@ -54,19 +47,7 @@
         
         console.log('🌟 Clínica Florê - Acesso exclusivo configurado para cliente');
     </script>
-    
 
-    <!-- Chosen Palette: Warm Neutral (Background: #fdfaf6), Dark Gray Text (#374151), Sage Green Accent (#84a98c), Tan Accent (#cad2c5) -->
-    <!-- Application Structure Plan: A single-page, interactive onboarding guide for the client, Mônica. Structure is thematic: 1. Partnership Intro, 2. Interactive Strategy Definition (service focus with text area, positioning choice, detailed audience questions with options, audience mapping by me, inspiration accounts), 3. Visual Investment Breakdown (chart), 4. Actionable Checklist (creatives & access fields with username/email and password inputs), 5. Contact. This structure transforms a static proposal into a guided, engaging experience, making it easier for the client to understand her role and provide the necessary information, which is more user-friendly than a dense text document, while also collecting crucial data for Supabase integration. -->
-    <!-- Visualization & Content Choices: 
-    - Report Info: Market Positioning (Volume vs. Exclusivity) -> Goal: Clarify choice & implications -> Viz/Method: Two large, clickable HTML cards -> Interaction: Clicking a card highlights it and reveals context-specific text, providing instant feedback and reinforcing the choice. This is better than a simple radio button for emphasizing the two distinct paths.
-    - Report Info: Investment Breakdown (R$300 fee + R$300 ad spend) -> Goal: Clearly visualize the 50/50 split -> Viz/Method: Chart.js Doughnut Chart -> Interaction: Hover tooltips provide exact values. A chart is more impactful and easier to grasp than plain text for financial data.
-    - Report Info: List of required assets/access (now with input fields for username/email and password) -> Goal: Create an actionable to-do list and data collection point -> Viz/Method: HTML checklist with input fields and a dynamic progress bar -> Interaction: Clicking checkboxes updates the progress bar, gamifying the onboarding process and giving the client a sense of accomplishment and clarity on what's pending. Input fields facilitate direct data entry for access credentials, including passwords with security advisories.
-    - Report Info: Service focus (now user-entered) -> Goal: Direct input from client -> Viz/Method: Textarea.
-    - Report Info: Public-target questions (now selectable options) -> Goal: Guided input on audience perception -> Viz/Method: Radio buttons/checkboxes for demographics and psychographics.
-    - Report Info: Inspiration accounts -> Goal: Gather creative and strategic benchmarks -> Viz/Method: Text input fields.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -179,16 +160,101 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Layout responsivo para sidebar */
+        .main-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .main-container {
+                margin-left: calc(16rem + 40px); /* Sidebar + 40px de gap */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+        
+        /* Placeholder para gráfico */
+        .chart-placeholder {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chart-placeholder:hover {
+            background: #e5e7eb;
+            border-color: #84a98c;
+        }
+        
+        /* Loading spinner inline */
+        .inline-spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #84a98c;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        
+        /* Otimizações de performance visual */
+        body {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        body.page-ready {
+            opacity: 1;
+        }
+        
+        /* Skeleton loading para elementos que ainda não carregaram */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Feedback visual de interatividade */
+        .interactive-element {
+            transition: all 0.2s ease;
+        }
+        
+        .interactive-element:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- Inicialização Rápida - Carrega primeiro -->
+    <script src="quick-init.js"></script>
+    
+    <!-- Sidebar Component -->
+    <script src="../../components/sidebar.js"></script>
+    <script>
+        // Inicializa o sidebar imediatamente
+        document.addEventListener('DOMContentLoaded', function() {
+            new SidebarComponent();
+        });
+    </script>
 
-
-    <div class="container mx-auto max-w-5xl p-4 sm:p-8">
+    <div class="main-container max-w-5xl mx-auto py-4 sm:py-8">
 
         <header class="text-center my-8 md:my-12">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#84a98c]">Plano de Ação Digital</h1>
+                            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#84a98c]">Área do Cliente</h1>
             <p class="mt-2 text-lg sm:text-xl text-gray-600">Clínica Florê | Área do Cliente</p>
             <div class="mt-4 inline-flex items-center px-4 py-2 bg-blue-50 rounded-full">
                 <span class="text-sm text-blue-700">👤 Acesso exclusivo para Mônica</span>
@@ -248,8 +314,6 @@
                         </div>
                          <div id="posicionamento-feedback" class="mt-6 p-4 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 hidden"></div>
                     </div>
-
-
 
                     <div>
                         <h3 class="text-xl font-semibold text-gray-700 mb-3">Público-Alvo Ideal (Sua Visão)</h3>
@@ -331,7 +395,16 @@
                 <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="w-full md:w-1/2">
                         <div class="chart-container">
-                            <canvas id="investmentChart"></canvas>
+                            <div id="chart-placeholder" class="chart-placeholder h-full" onclick="loadChart()">
+                                <div class="text-center">
+                                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    <p class="font-medium">Clique para carregar o gráfico</p>
+                                    <p class="text-sm">Investimento detalhado</p>
+                                </div>
+                            </div>
+                            <canvas id="investmentChart" class="hidden"></canvas>
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 space-y-4">
@@ -437,6 +510,68 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Estratégia de Marketing Digital -->
+            <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm mb-12">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">Estratégia de Marketing Digital</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Como vamos atrair e conquistar nosso público-alvo
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Objetivo Principal -->
+                    <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800">Objetivo Principal</h4>
+                        </div>
+                        <p class="text-gray-700 mb-3">
+                            <strong class="text-[#84a98c]">Geração de Leads Qualificados</strong> para agendar consultas iniciais gratuitas.
+                        </p>
+                        <div class="bg-[#84a98c]/20 rounded-lg p-3">
+                            <p class="text-[#52796f] font-medium text-sm">
+                                Buscar um bom volume de clientes interessados em procedimentos estéticos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Público-Alvo -->
+                    <div class="bg-gradient-to-r from-[#84a98c]/10 to-[#52796f]/10 rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-[#84a98c] to-[#52796f] rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800">Público-Alvo</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Idade:</strong> 25 a 45 anos</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Localização:</strong> Porto Alegre e região</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Interesse:</strong> Melhora da autoestima</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#84a98c] rounded-full"></span>
+                                <span class="text-gray-700 text-sm"><strong>Foco:</strong> Estética avançada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
         
         <footer class="text-center mt-12 py-8 border-t border-gray-200">
@@ -458,8 +593,163 @@
 
     </div>
 
+    <!-- Scripts de carregamento sob demanda -->
+    <script>
+        // Estado global para controlar carregamentos
+        window.AppState = {
+            chartLoaded: false,
+            supabaseLoaded: false,
+            appLoaded: false
+        };
+
+        // Função para carregar Chart.js sob demanda
+        async function loadChart() {
+            if (window.AppState.chartLoaded) return;
+            
+            const placeholder = document.getElementById('chart-placeholder');
+            const canvas = document.getElementById('investmentChart');
+            
+            // Mostrar loading
+            placeholder.innerHTML = '<div class="text-center"><div class="inline-spinner mb-2"></div><p>Carregando gráfico...</p></div>';
+            
+            try {
+                // Carregar Chart.js
+                if (!window.Chart) {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                    document.head.appendChild(script);
+                    await new Promise(resolve => script.onload = resolve);
+                }
+                
+                // Criar gráfico
+                const ctx = canvas.getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Meus Serviços', 'Investimento em Anúncios'],
+                        datasets: [{
+                            data: [300, 300],
+                            backgroundColor: ['#84a98c', '#cad2c5'],
+                            borderColor: '#fdfaf6',
+                            borderWidth: 4,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) label += ': ';
+                                        if (context.parsed !== null) {
+                                            label += new Intl.NumberFormat('pt-BR', { 
+                                                style: 'currency', 
+                                                currency: 'BRL' 
+                                            }).format(context.parsed);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Esconder placeholder e mostrar gráfico
+                placeholder.classList.add('hidden');
+                canvas.classList.remove('hidden');
+                window.AppState.chartLoaded = true;
+                
+            } catch (error) {
+                console.error('Erro ao carregar gráfico:', error);
+                placeholder.innerHTML = '<div class="text-center text-red-500"><p>Erro ao carregar gráfico</p><button onclick="loadChart()" class="mt-2 px-4 py-2 bg-red-100 text-red-700 rounded">Tentar novamente</button></div>';
+            }
+        }
+
+        // Função para carregar Supabase sob demanda
+        async function loadSupabase() {
+            if (window.AppState.supabaseLoaded) return;
+            
+            try {
+                if (!window.supabase) {
+                    const script = document.createElement('script');
+                    script.src = 'https://unpkg.com/@supabase/supabase-js@2';
+                    document.head.appendChild(script);
+                    await new Promise(resolve => script.onload = resolve);
+                }
+                
+                window.AppState.supabaseLoaded = true;
+                console.log('✅ Supabase carregado');
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar Supabase:', error);
+            }
+        }
+
+        // Função para carregar aplicação principal sob demanda
+        async function loadMainApp() {
+            if (window.AppState.appLoaded) return;
+            
+            try {
+                // Carregar dependências primeiro
+                await loadSupabase();
+                
+                // Carregar config se necessário
+                if (!window.CONFIG) {
+                    const script = document.createElement('script');
+                    script.src = '../../config-github.js';
+                    document.head.appendChild(script);
+                    await new Promise(resolve => script.onload = resolve);
+                }
+                
+                // Carregar app principal
+                const script = document.createElement('script');
+                script.src = '../../app-secure.js';
+                document.head.appendChild(script);
+                await new Promise(resolve => script.onload = resolve);
+                
+                window.AppState.appLoaded = true;
+                console.log('✅ Aplicação principal carregada');
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar aplicação:', error);
+            }
+        }
+
+        // Auto-carregar funcionalidades conforme necessário
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Carregar app principal quando usuário interagir com formulários
+            const interactiveElements = document.querySelectorAll('input, textarea, button, .position-card');
+            let appLoadTriggered = false;
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('click', async () => {
+                    if (!appLoadTriggered) {
+                        appLoadTriggered = true;
+                        await loadMainApp();
+                    }
+                }, { once: true });
+                
+                element.addEventListener('focus', async () => {
+                    if (!appLoadTriggered) {
+                        appLoadTriggered = true;
+                        await loadMainApp();
+                    }
+                }, { once: true });
+            });
+        });
+        
+        // Contador de caracteres agora está no quick-init.js
+    </script>
+
     <!-- Botão de Salvar Flutuante -->
-    <button id="save-btn" class="floating-save-btn hidden bg-[#84a98c] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#6b7d71] transition-all duration-300 flex items-center">
+    <button id="save-btn" class="floating-save-btn hidden bg-[#84a98c] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#6b7d71] transition-all duration-300 flex items-center" onclick="loadMainApp()">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path>
         </svg>
@@ -475,36 +765,5 @@
         </div>
     </div>
 
-    <!-- Aplicação Principal Segura -->
-    <script src="../../app-secure.js"></script>
-    
-    <!-- Sidebar Component -->
-    <script src="../../components/sidebar.js"></script>
-    <script>
-        // Inicializa o sidebar
-        new SidebarComponent();
-    </script>
-    
-    <script>
-        // Contador de caracteres para diferencial
-        const diferencialInput = document.getElementById('clinic-differential');
-        const charCountElement = document.getElementById('char-count');
-        
-        if (diferencialInput && charCountElement) {
-            diferencialInput.addEventListener('input', function() {
-                const currentLength = this.value.length;
-                charCountElement.textContent = currentLength;
-                
-                // Mudar cor se próximo do limite
-                if (currentLength > 450) {
-                    charCountElement.style.color = '#ef4444'; // vermelho
-                } else if (currentLength > 400) {
-                    charCountElement.style.color = '#f59e0b'; // laranja
-                } else {
-                    charCountElement.style.color = '#6b7280'; // cinza padrão
-                }
-            });
-        }
-    </script>
 </body>
 </html>
