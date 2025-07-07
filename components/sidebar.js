@@ -100,6 +100,14 @@ class SidebarComponent {
                             <span class="font-medium">Meta Ads</span>
                         </a>
 
+                        <!-- Guia de Criativos -->
+                        <a href="${basePath}pages/documentacao/criativos/" class="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors sidebar-link" data-page="criativos">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="font-medium">Guia de Criativos</span>
+                        </a>
+
                         <!-- Divisor -->
                         <div class="border-t border-gray-200 my-4"></div>
 
@@ -581,6 +589,23 @@ class SidebarComponent {
         // Busca correspondência exata ou por caminho específico
         let activeLink = null;
         
+        // Verifica se está na página inicial primeiro (prioridade máxima)
+        if (currentPath === '/' || currentPath.includes('index.html') || currentPath === '/index.html') {
+            links.forEach(link => {
+                const dataPage = link.getAttribute('data-page');
+                if (dataPage === 'dashboard') {
+                    activeLink = link;
+                    return;
+                }
+            });
+            
+            // Se encontrou o link do dashboard, aplica e retorna
+            if (activeLink) {
+                activeLink.classList.add('active');
+                return;
+            }
+        }
+        
         links.forEach(link => {
             const href = link.getAttribute('href');
             if (!href) return;
@@ -606,6 +631,8 @@ class SidebarComponent {
                 activeLink = link;
             } else if (currentPath.includes('/pages/documentacao/facebook/') && href.includes('facebook/')) {
                 activeLink = link;
+            } else if (currentPath.includes('/pages/documentacao/criativos/') && href.includes('criativos/')) {
+                activeLink = link;
             } else if (currentPath.includes('/pages/ferramentas/') && href.includes('ferramentas/')) {
                 activeLink = link;
             } else if (currentPath.includes('/pages/briefing/') && href.includes('briefing/')) {
@@ -614,10 +641,6 @@ class SidebarComponent {
                 activeLink = link;
             } else if (currentPath.includes('/pages/admin/') && href.includes('admin/')) {
                 activeLink = link;
-            } else if (currentPath === '/' || currentPath.includes('index.html')) {
-                if (href === './' || href === '../' || href === '../../../' || href.endsWith('/')) {
-                    activeLink = link;
-                }
             }
         });
         
