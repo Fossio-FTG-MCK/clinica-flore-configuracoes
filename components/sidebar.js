@@ -101,11 +101,20 @@ class SidebarComponent {
                         </a>
 
                         <!-- Guia de Criativos -->
-                        <a href="${basePath}pages/documentacao/criativos/" class="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors sidebar-link" data-page="criativos">
+                        <a href="${basePath}pages/documentacao/guia-criativos/" class="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors sidebar-link" data-page="guia-criativos">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 3H5a2 2 0 00-2 2v12a4 4 0 004 4h2V3z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.2 15.9l.8-4.4-2.1-4.2-4.4-.8-4.2 2.1-.8 4.4 2.1 4.2 4.4.8 4.2-2.1z"></path>
+                            </svg>
+                            <span class="font-medium">Guia de Criativos</span>
+                        </a>
+
+                        <!-- Guia para Gravar -->
+                        <a href="${basePath}pages/documentacao/guia-para-gravar/" class="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors sidebar-link" data-page="guia-para-gravar">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                             </svg>
-                            <span class="font-medium">Guia de Criativos</span>
+                            <span class="font-medium">Guia para Gravar</span>
                         </a>
 
                         <!-- Divisor -->
@@ -631,7 +640,9 @@ class SidebarComponent {
                 activeLink = link;
             } else if (currentPath.includes('/pages/documentacao/facebook/') && href.includes('facebook/')) {
                 activeLink = link;
-            } else if (currentPath.includes('/pages/documentacao/criativos/') && href.includes('criativos/')) {
+            } else if (currentPath.includes('/pages/documentacao/guia-criativos/') && href.includes('guia-criativos/')) {
+                activeLink = link;
+            } else if (currentPath.includes('/pages/documentacao/guia-para-gravar/') && href.includes('guia-para-gravar/')) {
                 activeLink = link;
             } else if (currentPath.includes('/pages/ferramentas/') && href.includes('ferramentas/')) {
                 activeLink = link;
