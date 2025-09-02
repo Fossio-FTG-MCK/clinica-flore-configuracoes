@@ -3,900 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Performance - Clínica Florê</title>
-
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../../midias/512x512-BK.png">
-    <link rel="apple-touch-icon" href="../../midias/512x512-BK.png">
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="Sistema de gestão de tráfego pago para Clínica Florê - Saúde, Estética e Bem-estar">
-    <meta name="keywords" content="clínica, estética, tráfego pago, harmonização facial, botox">
-    <meta name="author" content="Marcelo Fruck - Gestor de Tráfego">
-
+    <title>Relatório Interativo de Performance - Clínica Florê</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Earth Tones with Teal/Orange Accents -->
+    <!-- Application Structure Plan: A top-down dashboard structure. Starts with high-level KPI cards for an instant snapshot. Follows with detailed ad performance tables, qualitative insights (Pontos Fortes/Atenção), and a clear, actionable plan. The visual charts are moved to the bottom to serve as a visual summary after the user has consumed the core data and strategic recommendations. This structure prioritizes data and action, using the charts for supplementary analysis. -->
+    <!-- Visualization & Content Choices: 
+        1.  KPI Cards: (Report Info: Key metrics Aug vs Jul) -> Goal: Inform -> Viz: HTML/CSS styled cards with % change -> Interaction: None -> Justification: Provides a quick, digestible summary of the most critical metrics.
+        2.  Monthly Comparison Chart: (Report Info: All metrics Aug vs Jul) -> Goal: Compare -> Viz: Bar Chart (Chart.js) -> Interaction: Hover tooltips for precise values -> Justification: Visually demonstrates the scale of change across all key metrics between the two periods.
+        3.  Campaign Performance Chart: (Report Info: Campaign-level data for Aug) -> Goal: Compare -> Viz: Grouped Bar Chart (Chart.js) -> Interaction: Hover tooltips -> Justification: Creates a stark, immediate visual contrast between the high-performing and low-performing campaigns, making the performance gap undeniable.
+        4.  Insights & Actions: (Report Info: Qualitative analysis and recommendations) -> Goal: Organize/Inform -> Viz: Styled HTML lists/cards -> Interaction: None -> Justification: Structures the strategic takeaways and next steps in a clear, scannable, and actionable format.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFBF9;
-            color: #2F2F2F;
+            background-color: #F5F5F4; /* stone-100 */
+            color: #292524; /* stone-800 */
         }
-        :root {
-            --verde-claro: #7CAF5E;
-            --branco-off: #FDFBF9;
-            --cinza-claro: #F4F5F7;
-            --azul-claro: #E5F0FF;
-            --roxo-pastel: #D9D6F3;
-            --amarelo-bege: #FFF5D4;
-            --preto-cinza: #2F2F2F;
-        }
-        .bg-theme-amarelo { background-color: var(--amarelo-bege); }
-        .bg-theme-verde { background-color: var(--verde-claro); }
-        .bg-theme-cinza { background-color: var(--cinza-claro); }
-        .text-theme-verde { color: var(--verde-claro); }
-        .border-theme-verde { border-color: var(--verde-claro); }
-        .shadow-custom { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .metric-positive { color: #34D399; }
-        .metric-negative { color: #F87171; }
-        .metric-neutral { color: #6B7280; }
-        
-        /* Estilo para o modal */
-        .modal {
-            transition: opacity 0.25s ease;
-        }
-        body.modal-active {
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
-        
-        /* Estilos para cards de anúncio */
-        .ad-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            background: white;
-            max-width: 500px;
-            margin: 0 auto;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .ad-header {
-            padding: 12px 16px;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        
-        .ad-content {
-            padding: 12px 16px;
-        }
-        
-        .ad-image-placeholder {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            height: 200px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 14px;
-            margin: 12px 0;
-        }
-        
-        .ad-footer {
-            background: #f9fafb;
-            padding: 12px 16px;
-            border-radius: 0 0 12px 12px;
-        }
-        
-        /* Ícones de anúncios clicáveis */
-        .ad-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .ad-icon:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border-color: var(--verde-claro);
-        }
-        
-        /* Sidebar para análise técnica */
-        .analysis-sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 600px;
-            height: 100vh;
-            background: white;
-            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        
-        .analysis-sidebar.open {
-            transform: translateX(0);
-        }
-        
-        .analysis-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .chart-container {
+            position: relative;
             width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 999;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
         }
-        
-        .analysis-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        @media (max-width: 768px) {
-            .analysis-sidebar {
-                width: 100%;
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
             }
         }
-        
-        /* Layout com sidebar */
-        .main-content {
-            min-height: 100vh;
+        .kpi-card {
+            background-color: #FAFAF9; /* stone-50 */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid #E7E5E4; /* stone-200 */
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        
-        /* Ajuste para o sidebar quando presente */
-        @media (min-width: 1024px) {
-            .main-content {
-                margin-left: 16rem;
-            }
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+        }
+        .section-card {
+            background-color: #FAFAF9; /* stone-50 */
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid #E7E5E4; /* stone-200 */
         }
     </style>
 </head>
-<body class="antialiased">
-    
-    <div class="main-content p-4 sm:p-6 md:p-8">
-
-    <div class="max-w-7xl mx-auto">
-
-        <!-- Cabeçalho -->
-        <header class="mb-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-theme-preto">Dashboard de Performance</h1>
-                    <p class="text-lg text-gray-600">Clínica Florê – Meta Ads (Jul/2025)</p>
-                </div>
-                <div class="flex items-center mt-4 sm:mt-0 space-x-2 bg-theme-verde text-white py-2 px-4 rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-4.44a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.88z"></path><path d="M15 2v5h5"></path><path d="M12 18v-6"></path><path d="m9 15 3 3 3-3"></path></svg>
-                    <span class="font-semibold">Relatório de Resultados</span>
-                </div>
-            </div>
+<body class="antialiased bg-stone-100">
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-stone-900">Relatório Interativo de Performance</h1>
+            <p class="text-lg text-stone-600 mt-2">Cliente: Clínica-Florê | Período: Agosto/2025</p>
         </header>
 
-        <!-- Visão Geral da Campanha -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-theme-amarelo p-6 rounded-xl shadow-custom">
-                <div class="flex items-center justify-between">
-                    <h3 class="font-semibold text-gray-700">Investimento Total</h3>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <main class="space-y-12">
+            <section id="visao-geral">
+                <div class="section-card">
+                    <h2 class="text-2xl font-bold text-stone-800 mb-1">Visão Geral de Performance</h2>
+                    <p class="text-stone-600 mb-6">Um resumo dos principais indicadores de Agosto em comparação com Julho, destacando o crescimento e as áreas de atenção.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="kpi-card text-center">
+                            <p class="text-sm font-medium text-stone-500">Investimento Total</p>
+                            <p class="text-4xl font-bold text-teal-700 mt-2">R$ 389,27</p>
+                            <div class="mt-2 flex items-center justify-center text-teal-600">
+                                <span class="font-semibold">▲ 189%</span>
+                            </div>
+                            <p class="text-xs text-stone-400 mt-1">vs. Julho</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-sm font-medium text-stone-500">Resultados (Conversas)</p>
+                            <p class="text-4xl font-bold text-teal-700 mt-2">54</p>
+                            <div class="mt-2 flex items-center justify-center text-teal-600">
+                                <span class="font-semibold">▲ 135%</span>
+                            </div>
+                            <p class="text-xs text-stone-400 mt-1">vs. Julho</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-sm font-medium text-stone-500">Custo por Resultado</p>
+                            <p class="text-4xl font-bold text-stone-800 mt-2">R$ 7,21</p>
+                            <div class="mt-2 flex items-center justify-center text-orange-600">
+                                <span class="font-semibold">▲ 23%</span>
+                            </div>
+                            <p class="text-xs text-stone-400 mt-1">vs. Julho</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-sm font-medium text-stone-500">Custo por 1.000 (CPM)</p>
+                            <p class="text-4xl font-bold text-stone-800 mt-2">R$ 15,15</p>
+                            <div class="mt-2 flex items-center justify-center text-teal-600">
+                                <span class="font-semibold">▼ 30%</span>
+                            </div>
+                            <p class="text-xs text-stone-400 mt-1">vs. Julho</p>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-4xl font-bold mt-2">R$ 134,80</p>
-                <p class="text-sm text-gray-500 mt-1">Valor total investido no período.</p>
-            </div>
-            <div class="bg-theme-amarelo p-6 rounded-xl shadow-custom">
-                <div class="flex items-center justify-between">
-                    <h3 class="font-semibold text-gray-700">Conversas Iniciadas</h3>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                </div>
-                <p class="text-4xl font-bold mt-2">24</p>
-                <p class="text-sm text-gray-500 mt-1">Leads qualificados via mensagem.</p>
-            </div>
-            <div class="bg-theme-amarelo p-6 rounded-xl shadow-custom">
-                <div class="flex items-center justify-between">
-                    <h3 class="font-semibold text-gray-700">Custo por Conversa (CPA)</h3>
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-theme-verde"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2Z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
-                </div>
-                <p class="text-4xl font-bold mt-2">R$ 5,62</p>
-                <p class="text-sm text-gray-500 mt-1">Custo médio para gerar um lead.</p>
-            </div>
-        </section>
-
-        <!-- Análise Detalhada dos Anúncios -->
-        <section class="bg-white p-6 rounded-xl shadow-custom mb-8">
-            <h2 class="text-xl font-bold mb-4">Análise Detalhada por Anúncio</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="border-b bg-theme-cinza">
-                            <th class="p-3 font-semibold">Anúncio</th>
-                            <th class="p-3 font-semibold text-center">Status</th>
-                            <th class="p-3 font-semibold text-right">Investimento</th>
-                            <th class="p-3 font-semibold text-center">Conversas</th>
-                            <th class="p-3 font-semibold text-right">CPA</th>
-                            <th class="p-3 font-semibold text-right">CTR</th>
-                            <th class="p-3 font-semibold text-right">CPC</th>
-                            <th class="p-3 font-semibold text-right">CPM</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b bg-green-50 hover:bg-green-100">
-                            <td class="p-3 font-medium">Reconhecimento AMPLO POA - AD05 ✨</td>
-                            <td class="p-3 text-center"><span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">Ativo</span></td>
-                            <td class="p-3 text-right">R$ 37,64</td>
-                            <td class="p-3 text-center">10</td>
-                            <td class="p-3 text-right font-bold metric-positive">R$ 3,76</td>
-                            <td class="p-3 text-right font-bold metric-positive">1,38%</td>
-                            <td class="p-3 text-right font-bold metric-positive">R$ 1,17</td>
-                            <td class="p-3 text-right font-bold metric-positive">R$ 11,09</td>
-                        </tr>
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="p-3 font-medium">Reconhecimento AMPLO POA - AD01</td>
-                            <td class="p-3 text-center"><span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">Ativo</span></td>
-                            <td class="p-3 text-right">R$ 64,29</td>
-                            <td class="p-3 text-center">10</td>
-                            <td class="p-3 text-right metric-neutral">R$ 6,43</td>
-                            <td class="p-3 text-right">0,79%</td>
-                            <td class="p-3 text-right">R$ 4,02</td>
-                            <td class="p-3 text-right">R$ 31,89</td>
-                        </tr>
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="p-3 font-medium">Reconhecimento AMPLO POA - AD03 - image</td>
-                            <td class="p-3 text-center"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">Pausado</span></td>
-                            <td class="p-3 text-right">R$ 13,90</td>
-                            <td class="p-3 text-center">3</td>
-                            <td class="p-3 text-right metric-positive">R$ 4,63</td>
-                            <td class="p-3 text-right">1,22%</td>
-                            <td class="p-3 text-right">R$ 2,78</td>
-                            <td class="p-3 text-right">R$ 27,80</td>
-                        </tr>
-                        <tr class="border-b bg-red-50 hover:bg-red-100">
-                            <td class="p-3 font-medium">Reconhecimento AMPLO POA - AD02</td>
-                            <td class="p-3 text-center"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">Pausado</span></td>
-                            <td class="p-3 text-right">R$ 17,36</td>
-                            <td class="p-3 text-center">1</td>
-                            <td class="p-3 text-right font-bold metric-negative">R$ 17,36</td>
-                            <td class="p-3 text-right">1,87%</td>
-                            <td class="p-3 text-right">R$ 2,48</td>
-                            <td class="p-3 text-right">R$ 46,29</td>
-                        </tr>
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="p-3 font-medium">Reconhecimento AMPLO POA - AD04</td>
-                            <td class="p-3 text-center"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">Pausado</span></td>
-                            <td class="p-3 text-right">R$ 1,61</td>
-                            <td class="p-3 text-center">0</td>
-                            <td class="p-3 text-right">-</td>
-                            <td class="p-3 text-right">0,00%</td>
-                            <td class="p-3 text-right">-</td>
-                            <td class="p-3 text-right">R$ 32,20</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Análise de Criativos -->
-        <section class="bg-white p-6 rounded-xl shadow-custom mb-8">
-            <h2 class="text-xl font-bold mb-2 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-theme-verde"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Análise de Criativos: O Poder da Mensagem</h2>
-            <p class="mb-6 text-gray-600">Os textos dos anúncios AD01 e AD05 são idênticos. Isso é um forte indicativo de que a diferença de performance está no **componente visual (imagem ou vídeo)**. O AD05 provavelmente possui um visual mais atrativo e alinhado com a mensagem, o que justifica seu sucesso. Clique nos ícones abaixo para ver análises técnicas dos criativos:</p>
+            </section>
             
-            <!-- Ícones dos Anúncios -->
-            <div class="flex flex-wrap gap-4 justify-center mb-6">
-                <div class="text-center">
-                    <div class="ad-icon bg-gradient-to-br from-blue-400 to-blue-600 text-white" onclick="openAnalysis('anuncio1')" title="Anúncio 1 - Análise Técnica">
-                        <span class="text-xl font-bold">AD1</span>
+            <section id="analise-anuncios">
+                <div class="section-card">
+                    <h2 class="text-2xl font-bold text-stone-800 mb-1">Performance Detalhada por Anúncio (Agosto)</h2>
+                    <p class="text-stone-600 mb-6">Abaixo, detalhamos a performance de cada anúncio individual. Os dados são ordenados pelo maior número de resultados e menor custo para identificar os criativos de maior sucesso.</p>
+
+                    <div class="mt-8">
+                        <h3 class="text-xl font-semibold text-stone-700 mb-4">Campanha Consolidada: Reconhecimento</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left text-stone-500">
+                                <thead class="text-xs text-stone-700 uppercase bg-stone-200">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Nome do Anúncio</th>
+                                        <th scope="col" class="px-6 py-3">Investimento (R$)</th>
+                                        <th scope="col" class="px-6 py-3">Resultados (Leads)</th>
+                                        <th scope="col" class="px-6 py-3">Custo por Lead (R$)</th>
+                                        <th scope="col" class="px-6 py-3">Impressões</th>
+                                        <th scope="col" class="px-6 py-3">Frequência</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">Reconhecimento AMPLO POA - AD01</td>
+                                        <td class="px-6 py-4">100.67</td>
+                                        <td class="px-6 py-4 font-bold">17</td>
+                                        <td class="px-6 py-4">5.92</td>
+                                        <td class="px-6 py-4">4596</td>
+                                        <td class="px-6 py-4">1.81</td>
+                                    </tr>
+                                    <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">Reconhecimento AMPLO POA - AD05 - carrossel</td>
+                                        <td class="px-6 py-4">82.20</td>
+                                        <td class="px-6 py-4 font-bold">14</td>
+                                        <td class="px-6 py-4">5.87</td>
+                                        <td class="px-6 py-4">11880</td>
+                                        <td class="px-6 py-4">2.28</td>
+                                    </tr>
+                                    <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">Reconhecimento AMPLO POA - AD04 - video</td>
+                                        <td class="px-6 py-4">42.22</td>
+                                        <td class="px-6 py-4 font-bold">9</td>
+                                        <td class="px-6 py-4">4.69</td>
+                                        <td class="px-6 py-4">1982</td>
+                                        <td class="px-6 py-4">1.76</td>
+                                    </tr>
+                                    <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">Reconhecimento AMPLO POA - AD03 - image</td>
+                                        <td class="px-6 py-4">66.52</td>
+                                        <td class="px-6 py-4 font-bold">8</td>
+                                        <td class="px-6 py-4">8.32</td>
+                                        <td class="px-6 py-4">3566</td>
+                                        <td class="px-6 py-4">1.82</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 p-4 bg-teal-50 text-teal-800 rounded-lg border border-teal-200">
+                            <h4 class="font-bold">Análise Rápida</h4>
+                            <p class="text-sm mt-1">O anúncio em vídeo (AD04) apresentou o menor Custo por Lead (R$ 4,69), mesmo com investimento menor, indicando alta eficiência do formato. O carrossel (AD05) teve o maior alcance e frequência, sugerindo bom engajamento, mas o vídeo se destaca como uma oportunidade clara para escalar.</p>
+                        </div>
                     </div>
-                    <p class="text-xs text-gray-600 mt-2">Anúncio 1</p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="ad-icon bg-gradient-to-br from-green-400 to-green-600 text-white" onclick="openAnalysis('anuncio5')" title="Anúncio 5 - Análise Técnica">
-                        <span class="text-xl font-bold">AD5</span>
+                    
+                    <div class="mt-10">
+                        <h3 class="text-xl font-semibold text-stone-700 mb-4">Campanha Consolidada: Engajamento</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left text-stone-500">
+                                <thead class="text-xs text-stone-700 uppercase bg-stone-200">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Nome do Anúncio</th>
+                                        <th scope="col" class="px-6 py-3">Investimento (R$)</th>
+                                        <th scope="col" class="px-6 py-3">Resultados (Leads)</th>
+                                        <th scope="col" class="px-6 py-3">Custo por Lead (R$)</th>
+                                        <th scope="col" class="px-6 py-3">Impressões</th>
+                                        <th scope="col" class="px-6 py-3">Frequência</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">[engajamento] AD02 - 04/08</td>
+                                        <td class="px-6 py-4">54.36</td>
+                                        <td class="px-6 py-4 font-bold">3</td>
+                                        <td class="px-6 py-4">18.12</td>
+                                        <td class="px-6 py-4">2184</td>
+                                        <td class="px-6 py-4">2.31</td>
+                                    </tr>
+                                    <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">[engajamento] AD03 - 09/08</td>
+                                        <td class="px-6 py-4">22.23</td>
+                                        <td class="px-6 py-4 font-bold">2</td>
+                                        <td class="px-6 py-4">11.12</td>
+                                        <td class="px-6 py-4">783</td>
+                                        <td class="px-6 py-4">2.98</td>
+                                    </tr>
+                                     <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">[engajamento] AD05 - 19/08</td>
+                                        <td class="px-6 py-4">14.19</td>
+                                        <td class="px-6 py-4 font-bold">1</td>
+                                        <td class="px-6 py-4">14.19</td>
+                                        <td class="px-6 py-4">636</td>
+                                        <td class="px-6 py-4">1.56</td>
+                                    </tr>
+                                    <tr class="bg-stone-50 border-b border-stone-200 hover:bg-stone-100">
+                                        <td class="px-6 py-4 font-medium text-stone-900 whitespace-nowrap">[engajamento] AD04 - 13/08</td>
+                                        <td class="px-6 py-4">6.88</td>
+                                        <td class="px-6 py-4 font-bold">0</td>
+                                        <td class="px-6 py-4">—</td>
+                                        <td class="px-6 py-4">238</td>
+                                        <td class="px-6 py-4">2.83</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 p-4 bg-orange-50 text-orange-800 rounded-lg border border-orange-200">
+                            <h4 class="font-bold">Análise Rápida</h4>
+                            <p class="text-sm mt-1">A performance desta campanha foi fraca, com Custo por Lead consistentemente alto. A frequência elevada, especialmente no AD03 (2.98) com poucas impressões, sugere que um público pequeno foi rapidamente saturado, resultando em ineficiência.</p>
+                        </div>
                     </div>
-                    <p class="text-xs text-gray-600 mt-2">Anúncio 5 ⭐</p>
                 </div>
-                
-                <div class="text-center">
-                    <div class="ad-icon bg-gradient-to-br from-purple-400 to-purple-600 text-white" onclick="openAnalysis('variacao1')" title="Variação 1 - Análise Técnica">
-                        <span class="text-xl font-bold">V1</span>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Variação 1</p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="ad-icon bg-gradient-to-br from-orange-400 to-orange-600 text-white" onclick="openAnalysis('variacao2')" title="Variação 2 - Análise Técnica">
-                        <span class="text-xl font-bold">V2</span>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Variação 2</p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="ad-icon bg-gradient-to-br from-pink-400 to-pink-600 text-white" onclick="openAnalysis('variacao3')" title="Variação 3 - Análise Técnica">
-                        <span class="text-xl font-bold">V3</span>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Variação 3</p>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Card Anúncio Simulado -->
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center mb-3">
-                        <img src="https://placehold.co/40x40/D9D6F3/2F2F2F?text=F" alt="Logo Clínica Florê" class="rounded-full mr-3">
+            </section>
+
+            <section id="destaques">
+                <div class="section-card">
+                    <h2 class="text-2xl font-bold text-stone-800 mb-1">Destaques Estratégicos</h2>
+                    <p class="text-stone-600 mb-6">Aqui estão os aprendizados do período, divididos entre os sucessos a replicar e os pontos que exigem otimização.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <p class="font-bold">Clínica Florê</p>
-                            <p class="text-xs text-gray-500">Patrocinado</p>
+                            <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center"><span class="text-2xl mr-2">👍</span> Pontos Fortes</h3>
+                            <ul class="space-y-4">
+                                <li class="p-4 bg-teal-50 rounded-lg border border-teal-200">
+                                    <h4 class="font-bold text-teal-900">Capacidade de Escala</h4>
+                                    <p class="text-sm text-teal-800 mt-1">A campanha "Reconhecimento" provou ser robusta, absorvendo mais verba com um CPA estável em R$ 6,08.</p>
+                                </li>
+                                <li class="p-4 bg-teal-50 rounded-lg border border-teal-200">
+                                    <h4 class="font-bold text-teal-900">Eficiência de Alcance (CPM)</h4>
+                                    <p class="text-sm text-teal-800 mt-1">A queda de 30% no CPM geral otimizou a entrega dos anúncios, alcançando mais pessoas por menos.</p>
+                                </li>
+                                <li class="p-4 bg-teal-50 rounded-lg border border-teal-200">
+                                    <h4 class="font-bold text-teal-900">Volume de Leads</h4>
+                                    <p class="text-sm text-teal-800 mt-1">O aumento de 135% no número de conversas (54) representa um crescimento substancial de oportunidades.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-orange-700 mb-4 flex items-center"><span class="text-2xl mr-2">⚠️</span> Pontos de Atenção</h3>
+                            <ul class="space-y-4">
+                                <li class="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                                    <h4 class="font-bold text-orange-900">Aumento do Custo por Resultado</h4>
+                                    <p class="text-sm text-orange-800 mt-1">O CPA geral subiu 23%, impulsionado pela campanha "Engajamento", que teve um CPA de R$ 16,28.</p>
+                                </li>
+                                <li class="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                                    <h4 class="font-bold text-orange-900">Queda na Taxa de Cliques (CTR)</h4>
+                                    <p class="text-sm text-orange-800 mt-1">A redução no CTR de 0,96% para 0,68% é um sinal crítico de fadiga dos criativos e menor atratividade.</p>
+                                </li>
+                                <li class="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                                    <h4 class="font-bold text-orange-900">Desperdício de Orçamento</h4>
+                                    <p class="text-sm text-orange-800 mt-1">A campanha de "Engajamento" consumiu 25% da verba para gerar apenas 11% dos resultados.</p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <p class="text-sm mb-3">Imagine um lugar na Zona Sul onde o tempo desacelera e o foco é exclusivamente você. Esse lugar é a Clínica Florê. Convidamos você a se desconectar da rotina e se entregar a uma experiência sensorial única com nossa limpeza de pele...</p>
-                    <div class="bg-gray-100 rounded-lg">
-                        <div class="bg-gray-200 h-40 flex items-center justify-center rounded-t-lg">
-                            <p class="text-gray-500">[ Visual do Anúncio (Imagem/Vídeo) ]</p>
+                </div>
+            </section>
+
+            <section id="proximos-passos">
+                 <div class="section-card">
+                    <h2 class="text-2xl font-bold text-stone-800 mb-1">Plano de Ação Recomendado</h2>
+                    <p class="text-stone-600 mb-6">Com base na análise, este é o plano de ação para otimizar a performance, capitalizar sobre os sucessos e corrigir as ineficiências.</p>
+                    <div class="space-y-6">
+
+                        <div class="flex items-start p-4 border-l-4 border-teal-500 bg-teal-50 rounded-r-lg">
+                            <div class="flex-shrink-0 text-teal-600 text-2xl font-bold mr-4">1</div>
+                            <div>
+                                <h3 class="font-bold text-teal-800">ESCALAR Campanha de Alta Performance</h3>
+                                <p class="text-teal-700 text-sm mt-1">Focar 100% do orçamento da campanha pausada para a campanha **"Reconhecimento insta"**.</p>
+                            </div>
                         </div>
-                        <div class="p-3">
-                            <p class="text-xs uppercase text-gray-500">clinicaflore.com.br</p>
-                            <p class="font-semibold">Limpeza de Pele é na Florê: a expertise que a Zona Sul confia.</p>
-                            <p class="text-sm text-gray-600">Redescubra o brilho natural da sua pele! Agende seu ritual de beleza!</p>
+                        <div class="flex items-start p-4 border-l-4 border-teal-500 bg-teal-50 rounded-r-lg">
+                            <div class="flex-shrink-0 text-teal-600 text-2xl font-bold mr-4">2</div>
+                            <div>
+                                <h3 class="font-bold text-teal-800">OTIMIZAR e TESTAR Criativos</h3>
+                                <p class="text-teal-700 text-sm mt-1">Lançar um teste A/B com **2 a 3 novos criativos** (foco em vídeo) e novas variações de texto na campanha principal.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Análise do Texto -->
-                <div class="bg-theme-cinza p-4 rounded-lg">
-                    <h3 class="font-bold mb-2">Por que este texto funciona?</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <span class="bg-theme-verde text-white rounded-full h-6 w-6 flex items-center justify-center mr-3 flex-shrink-0">1</span>
-                            <div><strong class="block">Conexão Emocional e Sensorial:</strong> Usa palavras como "desacelera", "desconectar", "experiência sensorial", "acolhedor" e "ritual". Isso não vende um procedimento, mas sim uma experiência de bem-estar e alívio para a rotina agitada.</div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="bg-theme-verde text-white rounded-full h-6 w-6 flex items-center justify-center mr-3 flex-shrink-0">2</span>
-                            <div><strong class="block">Gera Confiança e Autoridade:</strong> Termos como "especialistas", "protocolos testados", "tecnologia de ponta" e "expertise" posicionam a clínica como uma escolha segura e profissional, justificando o investimento.</div>
-                        </li>
-                         <li class="flex items-start">
-                            <span class="bg-theme-verde text-white rounded-full h-6 w-6 flex items-center justify-center mr-3 flex-shrink-0">3</span>
-                             <div><strong class="block">Foco Local e Relevante:</strong> Mencionar "Zona Sul" cria uma conexão imediata com o público-alvo, aumentando a relevância do anúncio. A pessoa sente que a mensagem é para ela.</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Diagnóstico e Plano de Ação -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-white p-6 rounded-xl shadow-custom">
-                <h2 class="text-xl font-bold mb-4">Diagnóstico Rápido</h2>
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="font-semibold text-lg text-theme-verde mb-2">✅ Destaques Positivos</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-700">
-                            <li><strong>Anúncio Campeão (AD05):</strong> Performance excepcional validando a oferta e o público. O criativo visual dele é a chave do sucesso.</li>
-                            <li><strong>CPA Competitivo:</strong> Conseguir leads a R$ 3,76 (AD05) e R$ 4,63 (AD03) é um excelente indicador de alinhamento.</li>
-                            <li><strong>Decisão Acertada:</strong> A pausa nos anúncios AD02 e AD04 foi correta e evitou o desperdício de verba em criativos de baixa performance.</li>
-                            <li><strong>Base Textual Forte:</strong> Os textos (copy) são de alta qualidade, criando uma base sólida para todos os anúncios.</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-red-500 mb-2">⚠️ Pontos de Melhoria</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-700">
-                            <li><strong>Dispersão de Orçamento:</strong> O anúncio de melhor performance (AD05) não recebeu a maior parte da verba, uma oportunidade clara de otimização.</li>
-                             <li><strong>Performance do AD01:</strong> Apesar de ativo, seu CPA de R$ 6,43 e CTR de 0,79% indicam que seu visual não conecta tão bem quanto o do AD05.</li>
-                        </ul>
+            </section>
+            
+            <section id="visualizacoes-graficas" class="space-y-12">
+                 <div class="section-card">
+                    <h2 class="text-2xl font-bold text-stone-800 mb-1">Análise Gráfica Comparativa</h2>
+                    <p class="text-stone-600 mb-6">Os gráficos abaixo oferecem uma visualização da performance. Passe o mouse sobre as barras para ver os valores exatos.</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-center text-stone-700 mb-4">Comparativo Mensal</h3>
+                             <div class="chart-container">
+                                <canvas id="monthlyComparisonChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                             <h3 class="text-lg font-semibold text-center text-stone-700 mb-4">Performance das Campanhas (Agosto)</h3>
+                            <div class="chart-container">
+                                <canvas id="campaignsChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="bg-theme-azul p-6 rounded-xl border-2 border-dashed border-blue-300">
-                <h2 class="text-xl font-bold mb-4">Plano de Ação Estratégico 🚀</h2>
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="font-semibold text-lg text-blue-800 mb-2">1. Otimização de Orçamento</h3>
-                        <p class="text-gray-700">
-                            <strong>Manter Pausados:</strong> A decisão de pausar <strong>AD02</strong> e <strong>AD04</strong> foi estratégica e deve ser mantida.
-                            <br>
-                            <strong>Foco no Campeão:</strong> Direcionar 70-80% do orçamento para o <strong>AD05</strong>. Alocar os 20-30% restantes para o <strong>AD01</strong>, que ainda serve como um bom controle.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-blue-800 mb-2">2. Evolução dos Criativos</h3>
-                        <p class="text-gray-700">
-                           <strong>Replicar o Visual do AD05:</strong> O que o vídeo/imagem do AD05 mostra? Um ambiente? O procedimento? Pessoas relaxando? Criar 2 novas variações de visuais que sigam a mesma linha de sucesso.
-                           <br>
-                           <strong>Teste A/B Inteligente:</strong> Criar um novo anúncio (AD06) usando o **visual do AD05** com uma nova variação de texto ou título para buscar uma performance ainda melhor.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-blue-800 mb-2">3. Expansão e Escala</h3>
-                         <p class="text-gray-700">
-                           <strong>Remarketing Leve:</strong> Criar um público de pessoas que visitaram o perfil do Instagram nos últimos 14 dias. Veicular o anúncio AD05 para esse público com uma mensagem de reforço.
-                           <br>
-                           <strong>Escala Gradual:</strong> Com o orçamento focado no AD05, se o CPA se mantiver abaixo de R$ 5,00, aumentar o investimento conforme o desempenho.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer class="mt-8 text-center">
-            <p class="text-gray-600"><strong>Conclusão Atualizada:</strong> A campanha validou a oferta e o público, com uma base textual excelente e um criativo visual (AD05) campeão. As decisões de otimização foram corretas. O foco agora é total em **escalar o que funciona (visual do AD05)** e usar sua fórmula de sucesso para criar os próximos anúncios.</p>
+        </main>
+        
+        <footer class="text-center mt-12 text-stone-500 text-sm">
+            <p>&copy; 2025 - Relatório Gerado por Análise de Performance Automatizada.</p>
         </footer>
     </div>
-    
-    </div>
 
-    <!-- Overlay para análise técnica -->
-    <div class="analysis-overlay" id="analysisOverlay" onclick="closeAnalysis()"></div>
-
-    <!-- Sidebar para análise técnica -->
-    <div class="analysis-sidebar" id="analysisSidebar">
-        <div class="sticky top-0 bg-white border-b border-gray-200 p-6 z-10">
-            <div class="flex items-center justify-between">
-                <h3 class="text-xl font-bold text-gray-800" id="analysisTitle">Análise Técnica do Criativo</h3>
-                <button onclick="closeAnalysis()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        
-        <div class="p-6" id="analysisContent">
-            <!-- Conteúdo será inserido dinamicamente -->
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script>
-        function openAnalysis(adType) {
-            document.getElementById('analysisOverlay').classList.add('show');
-            document.getElementById('analysisSidebar').classList.add('open');
-            document.body.classList.add('modal-active');
-            
-            const content = getAnalysisContent(adType);
-            document.getElementById('analysisContent').innerHTML = content.html;
-            document.getElementById('analysisTitle').textContent = content.title;
-        }
-
-        function closeAnalysis() {
-            document.getElementById('analysisOverlay').classList.remove('show');
-            document.getElementById('analysisSidebar').classList.remove('open');
-            document.body.classList.remove('modal-active');
-        }
-
-        function getAnalysisContent(adType) {
-            const contents = {
-                anuncio1: {
-                    title: 'Anúncio 1 - Análise Técnica',
-                    html: `
-                        <div class="space-y-6">
-                            <!-- Card do Anúncio -->
-                            <div class="ad-card">
-                                <div class="ad-header">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
-                                            <span class="text-white text-sm font-bold">F</span>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-sm">Clínica Florê</p>
-                                            <p class="text-xs text-gray-500">Patrocinado</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ad-content">
-                                    <p class="text-sm text-gray-800 mb-3">Imagine um lugar na Zona Sul onde o tempo desacelera e o foco é exclusivamente você. Esse lugar é a Clínica Florê. Convidamos você a se desconectar da rotina e se entregar a uma experiência sensorial única com nossa limpeza de pele. Em um ambiente acolhedor e relaxante, cada etapa do procedimento é pensada para acalmar a mente e purificar a pele.</p>
-                                    <div class="ad-image-placeholder">
-                                        <p class="text-center">[ Visual do Anúncio 1 ]<br><small>Imagem/Vídeo Original</small></p>
-                                    </div>
-                                </div>
-                                <div class="ad-footer">
-                                    <p class="text-xs text-gray-500 uppercase">clinicaflore.com.br</p>
-                                    <p class="font-semibold text-sm">Limpeza de Pele é na Florê: a expertise que a Zona Sul confia.</p>
-                                    <p class="text-sm text-gray-600">Redescubra o brilho natural da sua pele! Agende seu ritual de beleza!</p>
-                                </div>
-                            </div>
-
-                            <!-- Análise Técnica -->
-                            <div class="bg-blue-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-blue-800 mb-4">📊 Análise de Performance</h4>
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold text-blue-600">R$ 6,43</p>
-                                        <p class="text-sm text-gray-600">CPA</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold text-blue-600">0,79%</p>
-                                        <p class="text-sm text-gray-600">CTR</p>
-                                    </div>
-                                </div>
-                                
-                                <h5 class="font-semibold text-blue-800 mb-2">✅ Pontos Fortes:</h5>
-                                <ul class="text-sm text-gray-700 space-y-1 mb-4">
-                                    <li>• <strong>Texto emocional:</strong> Cria conexão através de sensações</li>
-                                    <li>• <strong>Localização específica:</strong> "Zona Sul" gera relevância</li>
-                                    <li>• <strong>Promessa clara:</strong> Experiência sensorial única</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-orange-600 mb-2">⚠️ Oportunidades de Melhoria:</h5>
-                                <ul class="text-sm text-gray-700 space-y-1">
-                                    <li>• <strong>Visual pode ser otimizado:</strong> AD05 com mesmo texto teve performance superior</li>
-                                    <li>• <strong>CTA poderia ser mais urgente:</strong> Adicionar senso de escassez</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Recomendações -->
-                            <div class="bg-green-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-green-800 mb-4">🚀 Recomendações</h4>
-                                <ol class="text-sm text-gray-700 space-y-2">
-                                    <li><strong>1. Visual:</strong> Testar com o mesmo visual do AD05 que teve melhor performance</li>
-                                    <li><strong>2. Copy:</strong> Adicionar urgência: "Vagas limitadas para esta semana"</li>
-                                    <li><strong>3. CTA:</strong> Testar "Agende AGORA sua consulta gratuita"</li>
-                                </ol>
-                            </div>
-                        </div>
-                    `
+        document.addEventListener('DOMContentLoaded', function () {
+            const data = {
+                julho: {
+                    investimento: 134.81,
+                    impressoes: 6226,
+                    cpm: 21.65,
+                    cliques: 60,
+                    cpc: 2.25,
+                    resultados: 23,
+                    custoPorResultado: 5.86,
+                    ctr: 0.96
                 },
-                anuncio5: {
-                    title: 'Anúncio 5 - Análise Técnica ⭐ CAMPEÃO',
-                    html: `
-                        <div class="space-y-6">
-                            <!-- Card do Anúncio -->
-                            <div class="ad-card border-2 border-green-300">
-                                <div class="ad-header bg-green-50">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-                                            <span class="text-white text-sm font-bold">F</span>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-sm">Clínica Florê ⭐</p>
-                                            <p class="text-xs text-gray-500">Patrocinado</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ad-content">
-                                    <p class="text-sm text-gray-800 mb-3">Imagine um lugar na Zona Sul onde o tempo desacelera e o foco é exclusivamente você. Esse lugar é a Clínica Florê. Convidamos você a se desconectar da rotina e se entregar a uma experiência sensorial única com nossa limpeza de pele. Em um ambiente acolhedor e relaxante, cada etapa do procedimento é pensada para acalmar a mente e purificar a pele.</p>
-                                    <div class="ad-image-placeholder bg-gradient-to-br from-green-100 to-green-200">
-                                        <p class="text-center text-green-700">[ Visual CAMPEÃO do AD5 ]<br><small>Imagem/Vídeo de Alta Performance</small></p>
-                                    </div>
-                                </div>
-                                <div class="ad-footer">
-                                    <p class="text-xs text-gray-500 uppercase">clinicaflore.com.br</p>
-                                    <p class="font-semibold text-sm">Limpeza de Pele é na Florê: a expertise que a Zona Sul confia.</p>
-                                    <p class="text-sm text-gray-600">Redescubra o brilho natural da sua pele! Agende seu ritual de beleza!</p>
-                                </div>
-                            </div>
+                agosto: {
+                    investimento: 389.27,
+                    impressoes: 25699,
+                    cpm: 15.15,
+                    cliques: 175,
+                    cpc: 2.22,
+                    resultados: 54,
+                    custoPorResultado: 7.21,
+                    ctr: 0.68,
+                    campanhas: {
+                        reconhecimento: {
+                            investimento: 291.61,
+                            resultados: 48,
+                            custoPorResultado: 6.08,
+                            cpm: 13.36,
+                            ctr: 0.69
+                        },
+                        engajamento: {
+                            investimento: 97.66,
+                            resultados: 6,
+                            custoPorResultado: 16.28,
+                            cpm: 25.20,
+                            ctr: 0.65
+                        }
+                    }
+                }
+            };
 
-                            <!-- Análise Técnica -->
-                            <div class="bg-green-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-green-800 mb-4">🏆 Análise do Campeão</h4>
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold text-green-600">R$ 3,76</p>
-                                        <p class="text-sm text-gray-600">CPA</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold text-green-600">1,38%</p>
-                                        <p class="text-sm text-gray-600">CTR</p>
-                                    </div>
-                                </div>
-                                
-                                <h5 class="font-semibold text-green-800 mb-2">🎯 Por que este anúncio é CAMPEÃO:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                                    <li>• <strong>CTR 74% maior que AD01:</strong> Visual mais atrativo e alinhado</li>
-                                    <li>• <strong>CPA 41% menor:</strong> Melhor custo-benefício</li>
-                                    <li>• <strong>Mesmo texto do AD01:</strong> Diferença está no visual</li>
-                                    <li>• <strong>Conexão emocional forte:</strong> "Desacelera", "foco exclusivamente você"</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-green-800 mb-2">🔍 Insights Estratégicos:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• O visual é <strong>fundamental</strong> para performance</li>
-                                    <li>• Público responde bem à <strong>promessa de experiência</strong></li>
-                                    <li>• <strong>Localização específica</strong> aumenta relevância</li>
-                                    <li>• <strong>Autoridade técnica</strong> gera confiança</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Recomendações para Escala -->
-                            <div class="bg-blue-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-blue-800 mb-4">📈 Estratégia de Escala</h4>
-                                <ol class="text-sm text-gray-700 space-y-2">
-                                    <li><strong>1. Orçamento:</strong> Direcionar 70-80% do budget para este anúncio</li>
-                                    <li><strong>2. Replicação:</strong> Criar variações usando o mesmo estilo visual</li>
-                                    <li><strong>3. Público:</strong> Expandir para "Interesses semelhantes"</li>
-                                    <li><strong>4. Monitoramento:</strong> Manter CPA abaixo de R$ 5,00</li>
-                                    <li><strong>5. Teste A/B:</strong> Criar AD06 com este visual + nova copy</li>
-                                </ol>
-                            </div>
-                        </div>
-                    `
+            const formatCurrency = (value) => `R$ ${value.toFixed(2)}`;
+            const formatPercent = (value) => `${value.toFixed(2)}%`;
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                let value = context.parsed.y;
+                                const metric = context.chart.data.labels[context.dataIndex];
+                                if (metric.toLowerCase().includes('custo') || metric.toLowerCase().includes('investimento')) {
+                                    label += formatCurrency(value);
+                                } else if (metric.toLowerCase().includes('ctr')) {
+                                    label += formatPercent(value);
+                                }
+                                else {
+                                    label += value;
+                                }
+                                return label;
+                            }
+                        }
+                    }
                 },
-                variacao1: {
-                    title: 'Variação 1 - Análise Técnica',
-                    html: `
-                        <div class="space-y-6">
-                            <!-- Card do Anúncio -->
-                            <div class="ad-card">
-                                <div class="ad-header">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
-                                            <span class="text-white text-sm font-bold">F</span>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-sm">Clínica Florê</p>
-                                            <p class="text-xs text-gray-500">Patrocinado</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ad-content">
-                                    <p class="text-sm text-gray-800 mb-3">Na agitação da Zona Sul, sua pele pede por um respiro, um cuidado que vá além do superficial. Aqui na Florê, nossa limpeza de pele não é apenas um procedimento, é um ritual de renovação. Com técnicas apuradas e produtos de alta performance, removemos as impurezas célula por célula para revelar a vitalidade e o brilho que são verdadeiramente seus.</p>
-                                    <div class="ad-image-placeholder">
-                                        <p class="text-center">[ Visual da Variação 1 ]<br><small>Foco em Resultados</small></p>
-                                    </div>
-                                </div>
-                                <div class="ad-footer">
-                                    <p class="text-xs text-gray-500 uppercase">clinicaflore.com.br</p>
-                                    <p class="font-semibold text-sm">Sua pele tem uma beleza que só a Florê sabe revelar.</p>
-                                    <p class="text-sm text-gray-600">Sua pele merece o melhor! Limpeza de pele com resultados de verdade.</p>
-                                </div>
-                            </div>
-
-                            <!-- Análise Técnica -->
-                            <div class="bg-purple-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-purple-800 mb-4">🔬 Análise Técnica</h4>
-                                
-                                <h5 class="font-semibold text-purple-800 mb-2">✅ Pontos Fortes desta Variação:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                                    <li>• <strong>Foco em resultados:</strong> "revelar a vitalidade e o brilho"</li>
-                                    <li>• <strong>Técnica específica:</strong> "célula por célula"</li>
-                                    <li>• <strong>Diferenciação clara:</strong> "não é apenas um procedimento"</li>
-                                    <li>• <strong>Produtos de qualidade:</strong> "alta performance"</li>
-                                    <li>• <strong>Exclusividade:</strong> "só a Florê sabe revelar"</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-purple-800 mb-2">🎯 Por que pode funcionar:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                                    <li>• <strong>Abordagem racional:</strong> Para público que busca expertise técnica</li>
-                                    <li>• <strong>Credibilidade:</strong> Menciona técnicas e produtos específicos</li>
-                                    <li>• <strong>Resultados tangíveis:</strong> Promete efeitos visíveis</li>
-                                    <li>• <strong>Diferenciação:</strong> Posiciona como "ritual", não procedimento comum</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-orange-600 mb-2">💡 Oportunidades:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• Combinar com visual que mostre <strong>antes/depois</strong></li>
-                                    <li>• Adicionar <strong>depoimento</strong> para reforçar credibilidade</li>
-                                    <li>• Incluir <strong>certificações</strong> ou prêmios</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Público-Alvo -->
-                            <div class="bg-gray-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-gray-800 mb-4">👥 Público Ideal</h4>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• <strong>Perfil:</strong> Mulheres 28-40 anos, renda média-alta</li>
-                                    <li>• <strong>Comportamento:</strong> Pesquisam antes de decidir</li>
-                                    <li>• <strong>Motivação:</strong> Buscam qualidade e resultados comprovados</li>
-                                    <li>• <strong>Segmentação:</strong> Interessadas em "produtos de beleza premium"</li>
-                                </ul>
-                            </div>
-                        </div>
-                    `
-                },
-                variacao2: {
-                    title: 'Variação 2 - Análise Técnica',
-                    html: `
-                        <div class="space-y-6">
-                            <!-- Card do Anúncio -->
-                            <div class="ad-card">
-                                <div class="ad-header">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
-                                            <span class="text-white text-sm font-bold">F</span>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-sm">Clínica Florê</p>
-                                            <p class="text-xs text-gray-500">Patrocinado</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ad-content">
-                                    <p class="text-sm text-gray-800 mb-3">Quando se trata da sua pele, a confiança é tudo. E confiança se conquista com conhecimento, precisão e resultados visíveis. Na Clínica Florê, localizada no coração da Zona Sul, nossa equipe de especialistas dedica-se a oferecer a mais completa e segura limpeza de pele da região. Utilizamos protocolos dermatologicamente testados e tecnologia de ponta.</p>
-                                    <div class="ad-image-placeholder">
-                                        <p class="text-center">[ Visual da Variação 2 ]<br><small>Foco em Autoridade</small></p>
-                                    </div>
-                                </div>
-                                <div class="ad-footer">
-                                    <p class="text-xs text-gray-500 uppercase">clinicaflore.com.br</p>
-                                    <p class="font-semibold text-sm">Uma pausa para você, um recomeço para sua pele. Clínica Florê.</p>
-                                    <p class="text-sm text-gray-600">Cansada da correria? Faça uma pausa na Clínica Florê.</p>
-                                </div>
-                            </div>
-
-                            <!-- Análise Técnica -->
-                            <div class="bg-orange-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-orange-800 mb-4">🏥 Análise de Autoridade</h4>
-                                
-                                <h5 class="font-semibold text-orange-800 mb-2">✅ Pontos de Autoridade:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                                    <li>• <strong>Expertise comprovada:</strong> "equipe de especialistas"</li>
-                                    <li>• <strong>Validação científica:</strong> "protocolos dermatologicamente testados"</li>
-                                    <li>• <strong>Tecnologia avançada:</strong> "tecnologia de ponta"</li>
-                                    <li>• <strong>Posicionamento regional:</strong> "mais completa da região"</li>
-                                    <li>• <strong>Segurança:</strong> "mais segura limpeza de pele"</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-orange-800 mb-2">🎯 Estratégia Psicológica:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                                    <li>• <strong>Redução de risco:</strong> Enfatiza segurança e conhecimento</li>
-                                    <li>• <strong>Credibilidade técnica:</strong> Menciona protocolos e especialistas</li>
-                                    <li>• <strong>Exclusividade geográfica:</strong> "coração da Zona Sul"</li>
-                                    <li>• <strong>Diferenciação:</strong> Foca na competência vs. concorrência</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-green-600 mb-2">🚀 Potencial de Conversão:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• <strong>Alto para público conservador:</strong> Quem prioriza segurança</li>
-                                    <li>• <strong>Primeira experiência:</strong> Ideal para quem nunca fez</li>
-                                    <li>• <strong>Faixa etária madura:</strong> 35+ anos, mais cautelosas</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Otimizações Sugeridas -->
-                            <div class="bg-blue-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-blue-800 mb-4">🔧 Otimizações Sugeridas</h4>
-                                <div class="space-y-4">
-                                    <div>
-                                        <h5 class="font-semibold text-blue-800 mb-2">Visual Recomendado:</h5>
-                                        <ul class="text-sm text-gray-700 space-y-1">
-                                            <li>• Foto da equipe médica com jalecos</li>
-                                            <li>• Equipamentos modernos em destaque</li>
-                                            <li>• Certificados/diplomas na parede</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div>
-                                        <h5 class="font-semibold text-blue-800 mb-2">Copy Adicional:</h5>
-                                        <ul class="text-sm text-gray-700 space-y-1">
-                                            <li>• "Dermatologistas com 15+ anos de experiência"</li>
-                                            <li>• "Mais de 5.000 procedimentos realizados"</li>
-                                            <li>• "Certificado pelo Conselho de Dermatologia"</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
-                },
-                variacao3: {
-                    title: 'Variação 3 - Análise Técnica',
-                    html: `
-                        <div class="space-y-6">
-                            <!-- Card do Anúncio -->
-                            <div class="ad-card">
-                                <div class="ad-header">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-                                            <span class="text-white text-sm font-bold">F</span>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-sm">Clínica Florê</p>
-                                            <p class="text-xs text-gray-500">Patrocinado</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ad-content">
-                                    <p class="text-sm text-gray-800 mb-3">Permita-se sentir a leveza de uma pele profundamente purificada, macia e radiante. Mais do que estética, é o reencontro com a sua melhor versão. Deixe nossas mãos cuidadosas eliminarem o estresse e as toxinas do seu rosto, devolvendo a luminosidade e a sensação de frescor. Este é o seu momento, a sua pausa merecida.</p>
-                                    <div class="ad-image-placeholder">
-                                        <p class="text-center">[ Visual da Variação 3 ]<br><small>Foco em Bem-estar</small></p>
-                                    </div>
-                                </div>
-                                <div class="ad-footer">
-                                    <p class="text-xs text-gray-500 uppercase">clinicaflore.com.br</p>
-                                    <p class="font-semibold text-sm">Permita-se florescer por inteiro. Clínica Florê.</p>
-                                    <p class="text-sm text-gray-600">Agende seu momento! Saia renovada da Clínica Florê.</p>
-                                </div>
-                            </div>
-
-                            <!-- Análise Técnica -->
-                            <div class="bg-pink-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-pink-800 mb-4">💆‍♀️ Análise Emocional</h4>
-                                
-                                <h5 class="font-semibold text-pink-800 mb-2">✅ Gatilhos Emocionais:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                                    <li>• <strong>Autocuidado:</strong> "Este é o seu momento"</li>
-                                    <li>• <strong>Transformação:</strong> "reencontro com sua melhor versão"</li>
-                                    <li>• <strong>Sensações tácteis:</strong> "leveza", "macia", "radiante"</li>
-                                    <li>• <strong>Alívio do estresse:</strong> "eliminarem o estresse"</li>
-                                    <li>• <strong>Merecimento:</strong> "pausa merecida"</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-pink-800 mb-2">🧠 Psicologia da Mensagem:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                                    <li>• <strong>Permissão para se cuidar:</strong> "Permita-se"</li>
-                                    <li>• <strong>Foco no resultado emocional:</strong> Como vai se sentir</li>
-                                    <li>• <strong>Cuidado personalizado:</strong> "mãos cuidadosas"</li>
-                                    <li>• <strong>Escape da rotina:</strong> "sua pausa merecida"</li>
-                                </ul>
-                                
-                                <h5 class="font-semibold text-green-600 mb-2">💝 Público-Alvo Ideal:</h5>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• <strong>Mulheres sobrecarregadas:</strong> Trabalho + casa + filhos</li>
-                                    <li>• <strong>Faixa etária:</strong> 28-45 anos</li>
-                                    <li>• <strong>Momento de vida:</strong> Precisam se reconectar consigo</li>
-                                    <li>• <strong>Motivação:</strong> Autocuidado e bem-estar</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Estratégia de Implementação -->
-                            <div class="bg-purple-50 rounded-xl p-6">
-                                <h4 class="font-bold text-lg text-purple-800 mb-4">📱 Estratégia de Implementação</h4>
-                                
-                                <div class="space-y-4">
-                                    <div>
-                                        <h5 class="font-semibold text-purple-800 mb-2">🎯 Segmentação Ideal:</h5>
-                                        <ul class="text-sm text-gray-700 space-y-1">
-                                            <li>• Mães trabalhadoras 28-42 anos</li>
-                                            <li>• Interessadas em "autocuidado" e "wellness"</li>
-                                            <li>• Comportamento: Navegam sobre estresse no trabalho</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div>
-                                        <h5 class="font-semibold text-purple-800 mb-2">📺 Visual Sugerido:</h5>
-                                        <ul class="text-sm text-gray-700 space-y-1">
-                                            <li>• Mulher relaxando durante o procedimento</li>
-                                            <li>• Ambiente zen com plantas e luz suave</li>
-                                            <li>• Expressão de paz e tranquilidade</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div>
-                                        <h5 class="font-semibold text-purple-800 mb-2">⏰ Timing de Veiculação:</h5>
-                                        <ul class="text-sm text-gray-700 space-y-1">
-                                            <li>• Quarta a sexta: 11h-14h (pausa do almoço)</li>
-                                            <li>• Sábado: 9h-12h (planejamento do fim de semana)</li>
-                                            <li>• Domingo: 19h-21h (preparação para semana)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             };
             
-            return contents[adType] || {
-                title: 'Análise não encontrada',
-                html: '<p>Conteúdo em desenvolvimento...</p>'
+            const createMonthlyComparisonChart = () => {
+                const ctx = document.getElementById('monthlyComparisonChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Investimento (BRL)', 'Resultados', 'Custo p/ Resultado (BRL)', 'CPM (BRL)', 'CTR (%)'],
+                        datasets: [
+                            {
+                                label: 'Julho 2025',
+                                data: [data.julho.investimento, data.julho.resultados, data.julho.custoPorResultado, data.julho.cpm, data.julho.ctr],
+                                backgroundColor: 'rgba(168, 162, 158, 0.7)', // stone-400
+                                borderColor: 'rgba(168, 162, 158, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Agosto 2025',
+                                data: [data.agosto.investimento, data.agosto.resultados, data.agosto.custoPorResultado, data.agosto.cpm, data.agosto.ctr],
+                                backgroundColor: 'rgba(13, 148, 136, 0.7)', // teal-600
+                                borderColor: 'rgba(13, 148, 136, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: chartOptions
+                });
             };
-        }
+            
+            const createCampaignsChart = () => {
+                const ctx = document.getElementById('campaignsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Custo p/ Resultado (BRL)', 'Resultados', 'Investimento (BRL)'],
+                        datasets: [
+                            {
+                                label: 'Reconhecimento insta',
+                                data: [data.agosto.campanhas.reconhecimento.custoPorResultado, data.agosto.campanhas.reconhecimento.resultados, data.agosto.campanhas.reconhecimento.investimento],
+                                backgroundColor: 'rgba(20, 184, 166, 0.7)', // teal-500
+                                borderColor: 'rgba(20, 184, 166, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Engajamento {180D}',
+                                data: [data.agosto.campanhas.engajamento.custoPorResultado, data.agosto.campanhas.engajamento.resultados, data.agosto.campanhas.engajamento.investimento],
+                                backgroundColor: 'rgba(249, 115, 22, 0.7)', // orange-500
+                                borderColor: 'rgba(249, 115, 22, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: chartOptions
+                });
+            };
 
-        // Fechar com ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeAnalysis();
-            }
-        });
-    </script>
-
-    <!-- Sidebar Component -->
-    <script src="../../components/sidebar.js"></script>
-    <script>
-        // Inicializa o sidebar
-        document.addEventListener('DOMContentLoaded', function() {
-            new SidebarComponent();
+            createMonthlyComparisonChart();
+            createCampaignsChart();
         });
     </script>
 </body>
 </html>
+
